@@ -1,4 +1,4 @@
-# issue-blog
+# :tada:issue-blog
 
 回想自己搭建博客的历程真的能给自己无语死😶，从最早的`WordPress`开始，再到`Hexo`，再到`Gatsby`，再到有道云笔记，再到最近决定自己实现一个blog系统...
 
@@ -8,34 +8,37 @@
 
 总之，以后的博客会这里记录一份。😝
 
-## 资源汇总
+## :flags:资源汇总
 
-### 常用开发库/工具
+### :triangular_ruler:常用开发库/工具
 - [node版本管理工具](https://github.com/creationix/nvm)
 - [npm下载源管理工具](https://github.com/Pana/nrm)
 - [Ghelper 浏览器插件-翻墙用](http://googlehelper.net/)
 - [Recompose](https://github.com/acdlite/recompose)
 - [greensock with react](https://greensock.com/react)
 
-
-### 文章/文档
+### :page_facing_up:文章/文档
+#### 文档
 - [语义化版本说明](https://semver.org/lang/zh-CN/)
+- [git emoji 表情列表](https://www.webfx.com/tools/emoji-cheat-sheet/)
+
+#### 前端开发相关文章
 - [这里收集了许多移动端上遇到的各种坑](https://github.com/RubyLouvre/mobileHack)
 - [陈成大佬讲AST基础](https://www.bilibili.com/video/av37835266/)
 - [css-in-js 方案对比](https://github.com/MicheleBertoli/css-in-js)
 - [每个 JavaScript 工程师都应懂的33个概念](https://github.com/leonardomso/33-js-concepts?utm_source=gold_browser_extension)
-- [React 源码剖析系列 － 不可思议的 react diff](https://zhuanlan.zhihu.com/p/20346379)
-- [Didact: a DIY guide to build your own React](https://engineering.hexacta.com/didact-learning-how-react-works-by-building-it-from-scratch-51007984e5c5)
 - [[合集] 在 JavaScript ES6+ 中从零开始学习函数式编程&组合式软件编写系列译文](https://juejin.im/post/5a0275406fb9a04506710bbc)
 - [前端模块化介绍](https://www.infoq.cn/article/QdLtxgNU63-AuY1VOSm7)
 - [使用 GitHub 的十个最佳实践](https://www.infoq.cn/article/S_L2IkjzdpbYkeh7YXIH)
 - [为什么使用 css-in-js](https://mxstbr.com/thoughts/css-in-js/)
 
+#### React 相关文章
+- [React 源码剖析系列 － 不可思议的 react diff](https://zhuanlan.zhihu.com/p/20346379)
+- [Didact: a DIY guide to build your own React](https://engineering.hexacta.com/didact-learning-how-react-works-by-building-it-from-scratch-51007984e5c5)
 
-### 前端资讯
+### :mailbox_with_mail: 前端资讯
 
 #### 前端团队
-
 - [掘金](https://juejin.im/timeline/frontend)
 - [印记中文](https://docschina.org/)
 - [美团技术团队](https://tech.meituan.com/)
@@ -49,8 +52,10 @@
 - [Awesomes-Web前端开发资源库](https://www.awesomes.cn/)
 - [Infoq](http://www.infoq.com/cn/Front-end/?utm_source=infoq&utm_medium=header_graybar&utm_campaign=topic_clk)
 - [SorryCC早报](https://github.com/sorrycc/zaobao/issues)
+- [阿里云前端周刊](https://zhuanlan.zhihu.com/aliyun)
 
 #### 博客
+- [徐飞](https://github.com/xufei/blog/issues)
 - [阮一峰](http://www.ruanyifeng.com/blog/archives.html)
 - [张鑫旭](https://www.zhangxinxu.com/)
 - [司徒正美](http://www.cnblogs.com/rubylouvre/)
