@@ -32,6 +32,11 @@
 - [使用 GitHub 的十个最佳实践](https://www.infoq.cn/article/S_L2IkjzdpbYkeh7YXIH)
 - [为什么使用 css-in-js](https://mxstbr.com/thoughts/css-in-js/)
 
+#### 前端架构相关文章
+- [前端技术体系大局观](https://zhuanlan.zhihu.com/p/23185351)
+- [React 整洁架构](https://github.com/eduardomoroni/react-clean-architecture)
+- [前端整洁架构](https://github.com/phodal/clean-frontend)
+
 #### React 相关文章
 - [React 源码剖析系列 － 不可思议的 react diff](https://zhuanlan.zhihu.com/p/20346379)
 - [Didact: a DIY guide to build your own React](https://engineering.hexacta.com/didact-learning-how-react-works-by-building-it-from-scratch-51007984e5c5)
