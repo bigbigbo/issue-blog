@@ -1,4 +1,4 @@
-# :tada:issue-blog
+# issue-blog
 
 回想自己搭建博客的历程真的能给自己无语死😶，从最早的`WordPress`开始，再到`Hexo`，再到`Gatsby`，再到有道云笔记，再到最近决定自己实现一个blog系统...
 
@@ -8,16 +8,16 @@
 
 总之，以后的博客会这里记录一份。😝
 
-## :flags:资源汇总
+## :flags: 资源汇总
 
-### :triangular_ruler:常用开发库/工具
+### :triangular_ruler: 常用开发库/工具
 - [node版本管理工具](https://github.com/creationix/nvm)
 - [npm下载源管理工具](https://github.com/Pana/nrm)
 - [Ghelper 浏览器插件-翻墙用](http://googlehelper.net/)
 - [Recompose](https://github.com/acdlite/recompose)
 - [greensock with react](https://greensock.com/react)
 
-### :page_facing_up:文章/文档
+### :page_facing_up: 文章/文档
 #### 文档
 - [语义化版本说明](https://semver.org/lang/zh-CN/)
 - [git emoji 表情列表](https://www.webfx.com/tools/emoji-cheat-sheet/)
