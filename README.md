@@ -36,6 +36,7 @@
 - [前端技术体系大局观](https://zhuanlan.zhihu.com/p/23185351)
 - [React 整洁架构](https://github.com/eduardomoroni/react-clean-architecture)
 - [前端整洁架构](https://github.com/phodal/clean-frontend)
+- [什么是中台？](https://zhuanlan.zhihu.com/p/32317400)
 
 #### React 相关文章
 - [React 源码剖析系列 － 不可思议的 react diff](https://zhuanlan.zhihu.com/p/20346379)
