@@ -35,6 +35,7 @@
 #### React 相关文章
 - [React 源码剖析系列 － 不可思议的 react diff](https://zhuanlan.zhihu.com/p/20346379)
 - [Didact: a DIY guide to build your own React](https://engineering.hexacta.com/didact-learning-how-react-works-by-building-it-from-scratch-51007984e5c5)
+- [「译」React 项目结构和组件命名之道](https://zhuanlan.zhihu.com/p/47321322)
 
 ### :mailbox_with_mail: 前端资讯
 
