@@ -31,6 +31,7 @@
 - [前端模块化介绍](https://www.infoq.cn/article/QdLtxgNU63-AuY1VOSm7)
 - [使用 GitHub 的十个最佳实践](https://www.infoq.cn/article/S_L2IkjzdpbYkeh7YXIH)
 - [为什么使用 css-in-js](https://mxstbr.com/thoughts/css-in-js/)
+- [前后端常见的几种鉴权方式](https://blog.csdn.net/wang839305939/article/details/78713124)
 
 #### 前端架构相关文章
 - [前端技术体系大局观](https://zhuanlan.zhihu.com/p/23185351)
