@@ -8,7 +8,7 @@
 
 总之，以后的博客会这里记录一份。😝
 
-## :flags: 资源汇总
+## 资源汇总
 
 ### :triangular_ruler: 常用开发库/工具
 - [node版本管理工具](https://github.com/creationix/nvm)
