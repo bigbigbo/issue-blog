@@ -50,6 +50,11 @@
 
 ### :mailbox_with_mail: 前端资讯
 
+#### 前端周刊
+- [JavaScript 周刊](https://weekly.docschina.org/javascript/)
+- [前端精读周刊](https://github.com/dt-fe/weekly)
+- [阿里云前端技术周刊](https://github.com/aliyunfe/weekly)
+
 #### 前端团队
 - [掘金](https://juejin.im/timeline/frontend)
 - [印记中文](https://docschina.org/)
