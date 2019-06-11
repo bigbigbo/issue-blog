@@ -40,6 +40,7 @@
 - [什么是中台？](https://zhuanlan.zhihu.com/p/32317400)
 - [如何管理好10万行的前端单页应用](https://juejin.im/post/59cb0d0b5188257e876a2d27)
 - [「译」开发大型Angular应用的12条架构清单](https://juejin.im/post/5bc074e3e51d45021147ea21)
+- [中台微服务了，那前端呢？](https://www.infoq.cn/article/HNDtDuaIYsWUP-SGOPTK)
 
 #### React 相关文章
 - [React 源码剖析系列 － 不可思议的 react diff](https://zhuanlan.zhihu.com/p/20346379)
