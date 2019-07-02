@@ -43,6 +43,7 @@
 - [「译」开发大型Angular应用的12条架构清单](https://juejin.im/post/5bc074e3e51d45021147ea21)
 - [中台微服务了，那前端呢？](https://www.infoq.cn/article/HNDtDuaIYsWUP-SGOPTK)
 - [我们评测了 5 个主流跨端框架，这是它们的区别](https://www.infoq.cn/article/abC26cpsX44yCGT*hLzb)
+- [「微前端」- 将微服务理念扩展到前端开发（实战篇）](http://insights.thoughtworkers.org/micro-frontends-2/)
 
 #### React 相关文章
 - [React 源码剖析系列 － 不可思议的 react diff](https://zhuanlan.zhihu.com/p/20346379)
