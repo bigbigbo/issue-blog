@@ -51,6 +51,7 @@
 - [「微前端」- 将微服务理念扩展到前端开发（实战篇）](http://insights.thoughtworkers.org/micro-frontends-2/)
 - [一次浏览器性能提升 10 倍的经历](https://www.infoq.cn/article/XSKxPByXUVu1-O3OQsxD)
 - [蚂蚁金服玉伯：我们是如何从前端技术进化到体验科技的？](https://mp.weixin.qq.com/s/IYddaaw2ps1wR2VT1dZWPg)
+- [宋小菜技术的领域驱动设计(DDD)实践分享](https://tech.songxiaocai.com/posts/697883/index.html)
 
 #### React 相关文章
 - [React 源码剖析系列 － 不可思议的 react diff](https://zhuanlan.zhihu.com/p/20346379)
