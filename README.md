@@ -88,6 +88,7 @@
 - [张鑫旭](https://www.zhangxinxu.com/)
 - [司徒正美](http://www.cnblogs.com/rubylouvre/)
 - [冴羽的博客](https://github.com/mqyqingfeng/Blog)
+- [ewind](http://ewind.us/)
 - [elevenbeans](http://elevenbeans.github.io/)
 - [ChokCoco](http://www.cnblogs.com/coco1s/category/833837.html)
 - [颜海镜](https://yanhaijing.com/)
