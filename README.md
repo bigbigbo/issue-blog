@@ -22,6 +22,9 @@
 - [语义化版本说明](https://semver.org/lang/zh-CN/)
 - [git emoji 表情列表](https://www.webfx.com/tools/emoji-cheat-sheet/)
 
+#### 计算机相关
+- [什么叫网关](https://blog.csdn.net/snlying/article/details/4183983)
+
 #### 前端开发相关文章
 - [这里收集了许多移动端上遇到的各种坑](https://github.com/RubyLouvre/mobileHack)
 - [陈成大佬讲AST基础](https://www.bilibili.com/video/av37835266/)
