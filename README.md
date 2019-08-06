@@ -53,6 +53,8 @@
 - [蚂蚁金服玉伯：我们是如何从前端技术进化到体验科技的？](https://mp.weixin.qq.com/s/IYddaaw2ps1wR2VT1dZWPg)
 - [宋小菜技术的领域驱动设计(DDD)实践分享](https://tech.songxiaocai.com/posts/697883/index.html)
 - [领域驱动设计系列（1）通过现实例子显示领域驱动设计的威力](https://kb.cnblogs.com/page/522125/)
+- [领域驱动设计系列（2）浅析VO、DTO、DO、PO的概念、区别和用处](https://kb.cnblogs.com/page/522348/)
+- [领域驱动设计系列（3）有选择性的使用领域驱动设计](https://kb.cnblogs.com/page/521969/)
 
 #### React 相关文章
 - [React 源码剖析系列 － 不可思议的 react diff](https://zhuanlan.zhihu.com/p/20346379)
