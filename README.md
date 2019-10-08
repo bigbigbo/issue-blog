@@ -56,6 +56,8 @@
 - [领域驱动设计系列（1）通过现实例子显示领域驱动设计的威力](https://kb.cnblogs.com/page/522125/)
 - [领域驱动设计系列（2）浅析VO、DTO、DO、PO的概念、区别和用处](https://kb.cnblogs.com/page/522348/)
 - [领域驱动设计系列（3）有选择性的使用领域驱动设计](https://kb.cnblogs.com/page/521969/)
+- [深度解读当代前端架构演进与趋势（上）](https://www.infoq.cn/article/AJ0S3IDEHyusNms0bTf1)
+- [深度解读当代前端架构演进与趋势（下）](https://www.infoq.cn/article/bmfhe65caCpzyo0PQKmg)
 
 #### React 相关文章
 - [React 源码剖析系列 － 不可思议的 react diff](https://zhuanlan.zhihu.com/p/20346379)
