@@ -41,6 +41,7 @@
 - [uglify 压缩报错问题及 es5-imcompatible-versions](https://github.com/sorrycc/blog/issues/68)
 - [启动耗时降低 30%！腾讯在线教育小程序开发实践与优化](https://www.infoq.cn/article/dWvk5k4g-K8OLpNi9ey7)
 - [干货分享：蚂蚁金服前端框架和工程化实践](https://www.infoq.cn/article/CaXvurFIN*DqvW4iEh1H)
+- [开发一个高质量的前端组件，这些姿势一定要知道](https://mp.weixin.qq.com/s?__biz=MzUxMzcxMzE5Ng==&amp;mid=2247493007&amp;idx=1&amp;sn=caf4e39e99dc9731e46e7661fafe3fd4&amp;chksm=f95250ccce25d9da61e597fb1caeebfc61e265a0de85f92f1d9e7841212fd13c4f3748abebd7#rd)
 
 #### 前端架构相关文章
 - [前端技术体系大局观](https://zhuanlan.zhihu.com/p/23185351)
