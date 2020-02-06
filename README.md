@@ -55,6 +55,7 @@
 - [如何管理好10万行的前端单页应用](https://juejin.im/post/59cb0d0b5188257e876a2d27)
 - [「译」开发大型Angular应用的12条架构清单](https://juejin.im/post/5bc074e3e51d45021147ea21)
 - [中台微服务了，那前端呢？](https://www.infoq.cn/article/HNDtDuaIYsWUP-SGOPTK)
+- [快手前端发展：前端中台化、前端智能化，我们一直在追赶什么？](https://www.infoq.cn/article/1pTD8kmq9OO9aKPEAzPY)
 - [我们评测了 5 个主流跨端框架，这是它们的区别](https://www.infoq.cn/article/abC26cpsX44yCGT*hLzb)
 - [「微前端」- 将微服务理念扩展到前端开发（实战篇）](http://insights.thoughtworkers.org/micro-frontends-2/)
 - [一次浏览器性能提升 10 倍的经历](https://www.infoq.cn/article/XSKxPByXUVu1-O3OQsxD)
