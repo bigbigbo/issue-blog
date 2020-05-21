@@ -76,6 +76,7 @@
 - [「译」React 项目结构和组件命名之道](https://zhuanlan.zhihu.com/p/47321322)
 - [TypeScript 2.8下的终极React组件模式](https://juejin.im/post/5b07caf16fb9a07aa83f2977)
 - [对React Hooks的一些思考](https://zhuanlan.zhihu.com/p/48264713?utm_source=caibaojian.com)
+- [精读《useEffect 完全指南》](https://github.com/dt-fe/weekly/blob/v2/096.%E7%B2%BE%E8%AF%BB%E3%80%8AuseEffect%20%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97%E3%80%8B.md)
 
 ### :mailbox_with_mail: 前端资讯
 
