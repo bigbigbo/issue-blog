@@ -68,6 +68,7 @@
 - [深度解读当代前端架构演进与趋势（上）](https://www.infoq.cn/article/AJ0S3IDEHyusNms0bTf1)
 - [深度解读当代前端架构演进与趋势（下）](https://www.infoq.cn/article/bmfhe65caCpzyo0PQKmg)
 - [深度系统梳理前端性能优化](https://mp.weixin.qq.com/s?__biz=MzUyNDYxNDAyMg==&mid=2247484834&idx=1&sn=14c0bd94570ff2e28a9592b66300242b&chksm=fa2be54bcd5c6c5df07602b91fd4c9abb55ef250e0ff1c3f1c293655e9d33f876574effc8fa1&scene=0&xtrack=1&key=3fc1e1fe14970cbda44e03284ac4c6e6eed9698736cbb276cfc707629b853f95843665a4949855af25bf45081a005f43f8be91fd1bf8cec55c720d32bd24c4252867e36ec841a7e3e30c1c6d01a4fbee&ascene=1&uin=MTIyODAwMTA0MQ%3D%3D&devicetype=Windows+10&version=62070158&lang=zh_CN&pass_ticket=M7OY5Wx9UZwv5JDvzjctklTPkMWyX3ueNe4J5biOyQ70TIO0AEFV08cNIcPjL7b0)
+- [《蚂蚁前端研发最佳实践》文字稿](https://zhuanlan.zhihu.com/p/94949118)
 
 #### React 相关文章
 - [React 源码剖析系列 － 不可思议的 react diff](https://zhuanlan.zhihu.com/p/20346379)
