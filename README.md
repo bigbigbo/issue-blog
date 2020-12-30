@@ -28,6 +28,7 @@
 - [一场「面向对象」与 「面向过程」 的较量](https://mp.weixin.qq.com/s?__biz=MzI4Mzc5NDk4MA==&mid=2247486569&idx=1&sn=b665a58c96cac37cd9cede5998e7d095&chksm=eb840722dcf38e340aa2aad37bf21e9b0328291c16c0c93f8fdfc02e1f4929b80220e92d5cff&scene=21#wechat_redirect)
 - [如何用「设计模式」制作珍珠奶茶？](https://mp.weixin.qq.com/s?__biz=MzI4Mzc5NDk4MA==&mid=2247486859&idx=1&sn=2416ad2c2d4f4d1a9f62049c4abf404c&chksm=eb8406c0dcf38fd6c8c8f4adbd4fd8065e1a2e98e3731587192cf6ca3b9c96d13b639693bf24&scene=0&xtrack=1&key=3d64c8ab0dfd206a40f1c0b302f531ef2b914aed826851a126546a8596aa6ac025942ecae3167124af3833c2ed80b52f0cf85cebba3f48f4b8b11f5973421e93b899deb6820af9646c89835dc43c6000&ascene=1&uin=MTIyODAwMTA0MQ%3D%3D&devicetype=Windows+10&version=62060833&lang=zh_CN&pass_ticket=ngxY9Cnm436ETvGZwEYUE3%2BH9kUgqKu0v5p5tfFAqYrRFOhtFh5DmUCTbuvWljks)
 - [小心使用 git rebase](https://judes.me/tech/2015/11/08/about-git-rebase.html)
+- [如何基于 TypeScript 实现控制反转](https://juejin.cn/post/6898882861277904910)
 
 #### 前端开发相关文章
 - [这里收集了许多移动端上遇到的各种坑](https://github.com/RubyLouvre/mobileHack)
