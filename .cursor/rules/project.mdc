@@ -28,4 +28,7 @@ alwaysApply: false
 1. 使用 TypeScript、React、Next.js、Tailwind CSS 等技术栈
 2. 使用 Next.js 的 App Router 和 Server Actions 特性
 
+## 编码规范
+1. 使用 kebab-case 命名文件夹和文件名
+2. 优先考虑将 component 放置在 page.tsx 所在的 components 目录，如果没有，请创建跟 page.tsx 同级别的 components 目录
 
