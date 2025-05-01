@@ -37,13 +37,6 @@ class RequestClient {
       hooks: {
         beforeRequest: [
           async (request, options) => {
-            // 添加环境特定的请求头
-            if (this.isServerSide) {
-              request.headers.set("x-environment", "server");
-            } else {
-              request.headers.set("x-environment", "client");
-            }
-
             // 应用请求拦截器
             for (const interceptor of this.requestInterceptors) {
               const result = await interceptor(request, options);
