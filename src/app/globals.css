@@ -21,10 +21,9 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: var(--font-sans);
-  overflow: hidden; /* 防止出现滚动条 */
+  overflow: hidden;
 }
 
-/* 自定义滚动条样式 */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
