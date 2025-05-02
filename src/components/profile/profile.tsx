@@ -1,7 +1,7 @@
 import { AtSign, Github, Twitter } from "lucide-react";
 import Image from "next/image";
 
-export default function Profile() {
+export function Profile() {
   return (
     <div className="relative z-10 mx-auto flex max-w-2xl flex-col items-center justify-center rounded-2xl border border-white/[0.05] bg-white/[0.02] px-8 py-10 text-center shadow-[0_0_50px_rgba(0,0,0,0.1)]">
       <div className="mb-6">
