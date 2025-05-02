@@ -1,9 +1,9 @@
 "use client";
 
 import { Issue, getIssues } from "@/services/github";
+import { Calendar, Tag } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { FaCalendarAlt, FaTag } from "react-icons/fa";
 
 export default function BlogList() {
   const [issues, setIssues] = useState<Issue[]>([]);
@@ -70,7 +70,7 @@ export default function BlogList() {
             <h3 className="mb-2 text-xl font-semibold">{issue.title}</h3>
             <div className="mb-2 flex items-center text-sm text-gray-400">
               <div className="mr-4 flex items-center">
-                <FaCalendarAlt className="mr-1" />
+                <Calendar className="mr-1 h-4 w-4" />
                 <span>{new Date(issue.created_at).toLocaleDateString("zh-CN")}</span>
               </div>
               <div className="flex items-center">
@@ -86,7 +86,7 @@ export default function BlogList() {
                     className="inline-flex items-center rounded px-2 py-1 text-xs"
                     style={{ backgroundColor: `#${label.color}20`, color: `#${label.color}` }}
                   >
-                    <FaTag className="mr-1" />
+                    <Tag className="mr-1 h-3 w-3" />
                     {label.name}
                   </span>
                 ))}

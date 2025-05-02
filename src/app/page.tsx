@@ -1,8 +1,8 @@
 import BackgroundEffect from "@/components/BackgroundEffect";
 import Navbar from "@/components/Navbar";
 import Profile from "@/components/Profile";
+import { BookOpen } from "lucide-react";
 import Link from "next/link";
-import { FaBook } from "react-icons/fa";
 
 export default function Home() {
   return (
@@ -17,7 +17,7 @@ export default function Home() {
             href="/blog"
             className="flex items-center justify-center rounded-lg bg-blue-600 px-6 py-3 text-lg font-medium text-white transition-all hover:bg-blue-700"
           >
-            <FaBook className="mr-2" />
+            <BookOpen className="mr-2 h-5 w-5" />
             查看我的博客
           </Link>
         </div>
