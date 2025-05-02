@@ -28,4 +28,5 @@ const responseInterceptor: KyResponseInterceptor = async (
   }
   return response;
 };
+
 githubClient.addResponseInterceptor(responseInterceptor);

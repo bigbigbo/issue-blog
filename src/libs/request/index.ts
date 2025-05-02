@@ -1,20 +1,15 @@
 import ky, { Input, Options, ResponsePromise } from "ky";
 import { KyRequestInterceptor, KyResponseInterceptor, RequestOptions } from "./types";
 
-// 检测运行环境
-const isServer = typeof window === "undefined";
-
 class RequestClient {
   private baseUrl: string = "";
   private defaultOptions: Options = {};
   private requestInterceptors: KyRequestInterceptor[] = [];
   private responseInterceptors: KyResponseInterceptor[] = [];
   private instance!: typeof ky;
-  private isServerSide: boolean;
 
   constructor(baseUrl: string = "", options: Options = {}) {
     this.baseUrl = baseUrl;
-    this.isServerSide = isServer;
     this.defaultOptions = {
       timeout: 10000,
       retry: 1,
@@ -37,7 +32,6 @@ class RequestClient {
       hooks: {
         beforeRequest: [
           async (request, options) => {
-            // 应用请求拦截器
             for (const interceptor of this.requestInterceptors) {
               const result = await interceptor(request, options);
               if (result instanceof Request) {
@@ -52,7 +46,6 @@ class RequestClient {
         ],
         afterResponse: [
           async (request, options, response) => {
-            // 应用响应拦截器
             let modifiedResponse = response;
             for (const interceptor of this.responseInterceptors) {
               const result = await interceptor(request, options, modifiedResponse);
@@ -111,9 +104,6 @@ class RequestClient {
     }
   }
 
-  /**
-   * 发送请求
-   */
   public request<T = unknown>({
     method = "get",
     url,
@@ -128,7 +118,6 @@ class RequestClient {
       ...rest,
     };
 
-    // 处理 URL 参数
     if (params) {
       options.searchParams = params;
     }
@@ -138,7 +127,7 @@ class RequestClient {
       if (typeof data === "object" && !(data instanceof FormData) && !(data instanceof URLSearchParams)) {
         options.json = data;
       } else {
-        options.body = data;
+        options.body = data as BodyInit;
       }
     }
 
@@ -181,7 +170,6 @@ class RequestClient {
   }
 }
 
-// 创建默认实例
 const request = new RequestClient();
 
 export { RequestClient };
