@@ -1,6 +1,6 @@
 import { NormalizedOptions } from "ky";
-import { RequestClient } from ".";
-import { KyResponseInterceptor } from "./types";
+import { RequestClient } from "../client";
+import { KyResponseInterceptor } from "../types";
 
 const GITHUB_API_BASE = "https://api.github.com";
 const TOKEN = process.env.GITHUB_ACCESS_TOKEN;

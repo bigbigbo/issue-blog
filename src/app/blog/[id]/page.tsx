@@ -1,4 +1,4 @@
-import MarkdownRenderer from "@/components/MarkdownRenderer";
+import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { getIssueById, Issue } from "@/services/github";
 import { ArrowLeft, Calendar, Tag } from "lucide-react";
 import Image from "next/image";

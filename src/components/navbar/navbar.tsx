@@ -10,7 +10,7 @@ const navItems = [
   { name: "组件", path: "/components" },
 ];
 
-export default function Navbar() {
+export function Navbar() {
   const pathname = usePathname();
 
   return (

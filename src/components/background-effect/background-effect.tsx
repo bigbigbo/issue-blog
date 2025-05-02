@@ -4,9 +4,7 @@ import { useEffect, useRef } from "react";
 
 // 柏林噪声函数实现
 const noise = (() => {
-  const permutation = [...Array(256)].map(() =>
-    Math.floor(Math.random() * 256)
-  );
+  const permutation = [...Array(256)].map(() => Math.floor(Math.random() * 256));
   const p = [...permutation, ...permutation];
 
   function fade(t: number) {
@@ -35,12 +33,12 @@ const noise = (() => {
     return lerp(
       v,
       lerp(u, grad(p[A], x, y), grad(p[B], x - 1, y)),
-      lerp(u, grad(p[A + 1], x, y - 1), grad(p[B + 1], x - 1, y - 1))
+      lerp(u, grad(p[A + 1], x, y - 1), grad(p[B + 1], x - 1, y - 1)),
     );
   };
 })();
 
-export default function BackgroundEffect() {
+export function BackgroundEffect() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationFrameId = useRef<number | null>(null);
   const timeRef = useRef(0);
@@ -102,7 +100,7 @@ export default function BackgroundEffect() {
       noiseTime: number,
       noiseScale: number,
       hue: number,
-      alpha: number
+      alpha: number,
     ) => {
       ctx.beginPath();
       const points: [number, number][] = [];
@@ -126,12 +124,8 @@ export default function BackgroundEffect() {
         const next = points[(i + 1) % points.length];
         const nextnext = points[(i + 2) % points.length];
 
-        const cp1x =
-          curr[0] +
-          (next[0] - points[(i - 1 + points.length) % points.length][0]) * 0.15;
-        const cp1y =
-          curr[1] +
-          (next[1] - points[(i - 1 + points.length) % points.length][1]) * 0.15;
+        const cp1x = curr[0] + (next[0] - points[(i - 1 + points.length) % points.length][0]) * 0.15;
+        const cp1y = curr[1] + (next[1] - points[(i - 1 + points.length) % points.length][1]) * 0.15;
         const cp2x = next[0] - (nextnext[0] - curr[0]) * 0.15;
         const cp2y = next[1] - (nextnext[1] - curr[1]) * 0.15;
 
@@ -195,16 +189,7 @@ export default function BackgroundEffect() {
         blob.noiseOffsetY += 0.002;
 
         // 绘制有机光晕
-        drawOrganicBlob(
-          ctx,
-          blob.x,
-          blob.y,
-          blob.size * pulse,
-          timeRef.current + blob.noiseOffsetX,
-          2,
-          blob.hue,
-          0.6
-        );
+        drawOrganicBlob(ctx, blob.x, blob.y, blob.size * pulse, timeRef.current + blob.noiseOffsetX, 2, blob.hue, 0.6);
       });
 
       animationFrameId.current = requestAnimationFrame(animate);
@@ -220,10 +205,5 @@ export default function BackgroundEffect() {
     };
   }, []);
 
-  return (
-    <canvas
-      ref={canvasRef}
-      className="fixed top-0 left-0 w-full h-full -z-20"
-    />
-  );
+  return <canvas ref={canvasRef} className="fixed top-0 left-0 -z-20 h-full w-full" />;
 }

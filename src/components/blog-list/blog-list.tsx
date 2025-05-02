@@ -5,32 +5,32 @@ import { Calendar, Tag } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-export default function BlogList() {
+export function BlogList() {
   const [issues, setIssues] = useState<Issue[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [hasError, setHasError] = useState<string | null>(null);
   const [page, setPage] = useState(1);
   const perPage = 10;
 
   useEffect(() => {
     async function fetchIssues() {
       try {
-        setLoading(true);
+        setIsLoading(true);
         const data = await getIssues(page, perPage);
         setIssues(data);
-        setError(null);
+        setHasError(null);
       } catch (err) {
-        setError("获取博客列表失败");
+        setHasError("获取博客列表失败");
         console.error("Failed to fetch issues:", err);
       } finally {
-        setLoading(false);
+        setIsLoading(false);
       }
     }
 
     fetchIssues();
   }, [page]);
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="flex min-h-[50vh] items-center justify-center">
         <div className="h-12 w-12 animate-spin rounded-full border-t-2 border-b-2 border-blue-500"></div>
@@ -38,10 +38,10 @@ export default function BlogList() {
     );
   }
 
-  if (error) {
+  if (hasError) {
     return (
       <div className="py-10 text-center">
-        <h3 className="text-xl text-red-500">{error}</h3>
+        <h3 className="text-xl text-red-500">{hasError}</h3>
         <button onClick={() => setPage(1)} className="mt-4 rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600">
           重试
         </button>

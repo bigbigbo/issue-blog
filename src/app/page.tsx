@@ -1,6 +1,6 @@
-import BackgroundEffect from "@/components/BackgroundEffect";
-import Navbar from "@/components/Navbar";
-import Profile from "@/components/Profile";
+import { BackgroundEffect } from "@/components/background-effect";
+import { Navbar } from "@/components/navbar";
+import { Profile } from "@/components/profile";
 import { BookOpen } from "lucide-react";
 import Link from "next/link";
 
