@@ -1,5 +1,5 @@
+import { AtSign, Github, Twitter } from "lucide-react";
 import Image from "next/image";
-import { FaGithub, FaTwitter, FaWeibo } from "react-icons/fa";
 
 export default function Profile() {
   return (
@@ -35,7 +35,7 @@ export default function Profile() {
           rel="noopener noreferrer"
           className="text-gray-400/90 transition-all duration-300 hover:scale-110 hover:text-white"
         >
-          <FaGithub size={24} />
+          <Github size={24} />
         </a>
         <a
           href="https://twitter.com/yourusername"
@@ -43,7 +43,7 @@ export default function Profile() {
           rel="noopener noreferrer"
           className="text-gray-400/90 transition-all duration-300 hover:scale-110 hover:text-white"
         >
-          <FaTwitter size={24} />
+          <Twitter size={24} />
         </a>
         <a
           href="https://weibo.com/yourusername"
@@ -51,7 +51,7 @@ export default function Profile() {
           rel="noopener noreferrer"
           className="text-gray-400/90 transition-all duration-300 hover:scale-110 hover:text-white"
         >
-          <FaWeibo size={24} />
+          <AtSign size={24} />
         </a>
       </div>
     </div>

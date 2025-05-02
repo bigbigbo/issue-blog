@@ -1,9 +1,9 @@
 import MarkdownRenderer from "@/components/MarkdownRenderer";
 import { getIssueById, Issue } from "@/services/github";
+import { ArrowLeft, Calendar, Tag } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { FaArrowLeft, FaCalendarAlt, FaTag } from "react-icons/fa";
 
 // 在服务器端获取博客数据
 async function getBlogPost(id: string): Promise<Issue | null> {
@@ -29,7 +29,7 @@ export default async function BlogPost({ params }: { params: { id: string } }) {
     <main className="blog-page flex min-h-screen flex-col items-center p-6 md:p-12">
       <div className="mx-auto w-full max-w-4xl">
         <Link href="/blog" className="mb-8 flex items-center text-blue-400 hover:text-blue-500">
-          <FaArrowLeft className="mr-2" />
+          <ArrowLeft className="mr-2 h-5 w-5" />
           返回博客列表
         </Link>
 
@@ -38,7 +38,7 @@ export default async function BlogPost({ params }: { params: { id: string } }) {
             <h1 className="mb-4 text-3xl font-bold md:text-4xl">{post.title}</h1>
             <div className="mb-4 flex flex-wrap items-center text-gray-400">
               <div className="mr-6 mb-2 flex items-center">
-                <FaCalendarAlt className="mr-2" />
+                <Calendar className="mr-2 h-5 w-5" />
                 <span>{formattedDate}</span>
               </div>
               <div className="mb-2 flex items-center">
@@ -64,7 +64,7 @@ export default async function BlogPost({ params }: { params: { id: string } }) {
                       color: `#${label.color}`,
                     }}
                   >
-                    <FaTag className="mr-1" />
+                    <Tag className="mr-1 h-4 w-4" />
                     {label.name}
                   </span>
                 ))}
