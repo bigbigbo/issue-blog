@@ -26,17 +26,17 @@ export default function TypographyExample() {
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div>
-            <Typography.Title level={3} colorScheme="primary">
+            <Typography.Title level={3} color="primary">
               主色标题
             </Typography.Title>
           </div>
           <div>
-            <Typography.Title level={3} colorScheme="secondary">
+            <Typography.Title level={3} color="secondary">
               次要色标题
             </Typography.Title>
           </div>
           <div>
-            <Typography.Title level={3} colorScheme="accent">
+            <Typography.Title level={3} color="accent">
               强调色标题
             </Typography.Title>
           </div>
@@ -139,12 +139,12 @@ export default function TypographyExample() {
             段落组件适合展示大段文本内容，默认具有合适的行高和最大宽度限制，以提供最佳的阅读体验。
           </Typography.Paragraph>
 
-          <Typography.Paragraph colorScheme="muted" size="sm">
+          <Typography.Paragraph color="muted" size="sm">
             这是一个小号的次要段落。段落组件支持不同的颜色方案和尺寸，使其能够适应不同的设计需求。
             次要颜色方案通常用于辅助信息或不太重要的内容。
           </Typography.Paragraph>
 
-          <Typography.Paragraph colorScheme="accent" size="lg">
+          <Typography.Paragraph color="accent" size="lg">
             这是一个大号的强调段落。强调颜色方案可以用来突出显示重要的信息或提示，
             大号尺寸则可以用于引言或摘要等需要更多视觉注意力的内容。
           </Typography.Paragraph>
@@ -205,7 +205,7 @@ export default function TypographyExample() {
         </div>
 
         <div className="space-y-4 rounded-lg border bg-gray-50 p-6 dark:bg-gray-900">
-          <Typography.Title level={3} colorScheme="primary">
+          <Typography.Title level={3} color="primary">
             使用Typography组件构建完整内容
           </Typography.Title>
 
@@ -220,7 +220,7 @@ export default function TypographyExample() {
             表示积极结果。
           </Typography.Paragraph>
 
-          <Typography.Paragraph size="sm" colorScheme="muted">
+          <Typography.Paragraph size="sm" color="muted">
             如需了解更多信息，请访问我们的
             <Typography.Link href="#documentation" variant="subtle">
               {" "}
