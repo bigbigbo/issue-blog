@@ -1,5 +1,6 @@
 import { FlatCompat } from "@eslint/eslintrc";
 import simpleImportSort from "eslint-plugin-simple-import-sort";
+import storybook from "eslint-plugin-storybook";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 
@@ -47,6 +48,11 @@ const eslintConfig = [
       "@typescript-eslint/ban-ts-comment": "off",
       "react-hooks/exhaustive-deps": "off",
       "@typescript-eslint/consistent-type-imports": "error",
+    },
+  },
+  {
+    plugins: {
+      storybook,
     },
   },
 ];
