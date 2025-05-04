@@ -13,6 +13,8 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@tanstack/react-query": "5.75.2",
+    "@tanstack/react-query-devtools": "5.75.2",
     "class-variance-authority": "0.7.1",
     "clsx": "2.1.1",
     "ky": "1.8.1",

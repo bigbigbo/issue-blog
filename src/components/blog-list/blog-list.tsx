@@ -1,55 +1,47 @@
 "use client";
-import { useEffect, useState } from "react";
+
+import { useState } from "react";
 
 import { Calendar, Tag } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
+import { useQueryState } from "nuqs";
 
-import type { Issue } from "@/services/github";
-import { getIssues } from "@/services/github";
+import type { IssueListItem } from "@/core/entities/github-issue";
+import { useIssueList } from "@/stories/github-issue";
 
-export function BlogList() {
-  const [issues, setIssues] = useState<Issue[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [hasError, setHasError] = useState<string | null>(null);
-  const [page, setPage] = useState(1);
-  const perPage = 10;
+interface BlogListClientProps {
+  initialIssues: IssueListItem[];
+  initialPage: number;
+}
 
-  useEffect(() => {
-    async function fetchIssues() {
-      try {
-        setIsLoading(true);
-        const data = await getIssues(page, perPage);
-        setIssues(data);
-        setHasError(null);
-      } catch (err) {
-        setHasError("获取博客列表失败");
-        console.error("Failed to fetch issues:", err);
-      } finally {
-        setIsLoading(false);
-      }
+export function BlogList({ initialIssues, initialPage }: BlogListClientProps) {
+  const [page, setPage] = useQueryState("page", { defaultValue: String(initialPage) });
+  const [issues, setIssues] = useState<IssueListItem[]>(initialIssues);
+  const [hasMore, setHasMore] = useState(true);
+
+  const nextPage = page ? parseInt(page) + 1 : initialPage + 1;
+  const {
+    data: nextPageData,
+    isLoading,
+    isFetching,
+  } = useIssueList({
+    page: nextPage,
+    perPage: 10,
+    enabled: hasMore,
+  });
+
+  const handleLoadMore = async () => {
+    if (isLoading || isFetching || !hasMore || !nextPageData) return;
+
+    setPage(String(nextPage));
+
+    setIssues((prev) => [...prev, ...nextPageData]);
+
+    if (nextPageData.length < 10) {
+      setHasMore(false);
     }
-
-    fetchIssues();
-  }, [page]);
-
-  if (isLoading) {
-    return (
-      <div className="flex min-h-[50vh] items-center justify-center">
-        <div className="h-12 w-12 animate-spin rounded-full border-t-2 border-b-2 border-blue-500"></div>
-      </div>
-    );
-  }
-
-  if (hasError) {
-    return (
-      <div className="py-10 text-center">
-        <h3 className="text-xl text-red-500">{hasError}</h3>
-        <button onClick={() => setPage(1)} className="mt-4 rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600">
-          重试
-        </button>
-      </div>
-    );
-  }
+  };
 
   if (issues.length === 0) {
     return (
@@ -76,7 +68,13 @@ export function BlogList() {
                 <span>{new Date(issue.created_at).toLocaleDateString("zh-CN")}</span>
               </div>
               <div className="flex items-center">
-                <img src={issue.user.avatar_url} alt={issue.user.login} className="mr-1 h-5 w-5 rounded-full" />
+                <Image
+                  src={issue.user.avatar_url}
+                  alt={issue.user.login}
+                  className="mr-1 h-5 w-5 rounded-full"
+                  width={20}
+                  height={20}
+                />
                 <span>{issue.user.login}</span>
               </div>
             </div>
@@ -98,22 +96,25 @@ export function BlogList() {
         ))}
       </div>
 
-      <div className="mt-8 flex justify-between">
-        <button
-          onClick={() => setPage((p) => Math.max(1, p - 1))}
-          disabled={page === 1}
-          className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 disabled:cursor-not-allowed disabled:opacity-50"
-        >
-          上一页
-        </button>
-        <span className="px-4 py-2">第 {page} 页</span>
-        <button
-          onClick={() => setPage((p) => p + 1)}
-          disabled={issues.length < perPage}
-          className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 disabled:cursor-not-allowed disabled:opacity-50"
-        >
-          下一页
-        </button>
+      <div className="mt-12 flex justify-center">
+        {hasMore ? (
+          <button
+            onClick={handleLoadMore}
+            disabled={isLoading || isFetching}
+            className="rounded-full bg-blue-600 px-8 py-3 text-white transition-all hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            {isLoading || isFetching ? (
+              <span className="flex items-center">
+                <span className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-white/20 border-t-white"></span>
+                加载中...
+              </span>
+            ) : (
+              "加载更多"
+            )}
+          </button>
+        ) : (
+          <div className="text-center text-gray-400">没有更多内容了</div>
+        )}
       </div>
     </div>
   );

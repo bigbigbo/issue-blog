@@ -5,17 +5,14 @@ import { notFound } from "next/navigation";
 
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 
-import type { Issue } from "@/services/github";
-import { getIssueById } from "@/services/github";
+import { GithubIssueService } from "@/core/services/github-issue";
 
-// 在服务器端获取博客数据
-async function getBlogPost(id: string): Promise<Issue | null> {
-  return await getIssueById(parseInt(id));
-}
+export const revalidate = 5 * 60;
 
-export default async function BlogPost({ params }: { params: { id: string } }) {
+export default async function BlogPost({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const post = await getBlogPost(id);
+
+  const post = await GithubIssueService.getIssueDetail(parseInt(id));
 
   if (!post) {
     notFound();
