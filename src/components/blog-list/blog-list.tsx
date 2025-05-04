@@ -1,9 +1,11 @@
 "use client";
+import { useEffect, useState } from "react";
 
-import { Issue, getIssues } from "@/services/github";
 import { Calendar, Tag } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+
+import type { Issue } from "@/services/github";
+import { getIssues } from "@/services/github";
 
 export function BlogList() {
   const [issues, setIssues] = useState<Issue[]>([]);
