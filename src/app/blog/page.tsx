@@ -1,6 +1,10 @@
-import { BlogList } from "@/components/blog-list";
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 
-import { GithubIssueService } from "@/core/services/github-issue";
+import { BlogList } from "./_components/blog-list";
+
+import { getQueryClient } from "@/utils/get-query-client";
+
+import { infiniteIssueListOptions } from "@/stories/github-issue";
 
 export const revalidate = 5 * 60;
 
@@ -10,14 +14,22 @@ export default async function BlogPage(props: { searchParams: Promise<{ page: st
   const searchParams = await props.searchParams;
   const initialPage = searchParams.page ? parseInt(searchParams.page) : 1;
 
-  const initialIssues = await GithubIssueService.getIssueList({ page: 1, perPage: initialPage * perPage });
+  const queryClient = getQueryClient();
+
+  await queryClient.prefetchInfiniteQuery(
+    infiniteIssueListOptions({
+      initialPage,
+      perPage,
+      isServerInitialLoad: true,
+    }),
+  );
 
   return (
     <main className="blog-page flex min-h-screen flex-col items-center justify-between p-6 md:p-12">
       <div className="mx-auto w-full max-w-4xl">
-        <h1 className="mb-12 text-center text-4xl font-bold">我的博客</h1>
-
-        <BlogList initialIssues={initialIssues} initialPage={initialPage} />
+        <HydrationBoundary state={dehydrate(queryClient)}>
+          <BlogList initialPage={initialPage} />
+        </HydrationBoundary>
       </div>
     </main>
   );

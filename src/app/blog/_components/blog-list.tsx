@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect } from "react";
 
 import { Calendar, Tag } from "lucide-react";
 import Image from "next/image";
@@ -8,40 +8,54 @@ import Link from "next/link";
 import { useQueryState } from "nuqs";
 
 import type { IssueListItem } from "@/core/entities/github-issue";
-import { useIssueList } from "@/stories/github-issue";
+import { useInfiniteIssueList } from "@/stories/github-issue";
 
 interface BlogListClientProps {
-  initialIssues: IssueListItem[];
+  initialIssues?: IssueListItem[];
   initialPage: number;
 }
 
-export function BlogList({ initialIssues, initialPage }: BlogListClientProps) {
+export function BlogList({ initialPage }: BlogListClientProps) {
   const [page, setPage] = useQueryState("page", { defaultValue: String(initialPage) });
-  const [issues, setIssues] = useState<IssueListItem[]>(initialIssues);
-  const [hasMore, setHasMore] = useState(true);
 
-  const nextPage = page ? parseInt(page) + 1 : initialPage + 1;
-  const {
-    data: nextPageData,
-    isLoading,
-    isFetching,
-  } = useIssueList({
-    page: nextPage,
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, isError } = useInfiniteIssueList({
+    initialPage: initialPage,
     perPage: 10,
-    enabled: hasMore,
   });
 
-  const handleLoadMore = async () => {
-    if (isLoading || isFetching || !hasMore || !nextPageData) return;
+  useEffect(() => {
+    if (data?.pageParams?.length) {
+      const lastPageParam = data.pageParams[data.pageParams.length - 1];
 
-    setPage(String(nextPage));
-
-    setIssues((prev) => [...prev, ...nextPageData]);
-
-    if (nextPageData.length < 10) {
-      setHasMore(false);
+      if (typeof lastPageParam === "number" && String(lastPageParam) !== page) {
+        setPage(String(lastPageParam));
+      }
     }
+  }, [data?.pageParams, page, setPage]);
+
+  const issues = data?.pages.flatMap((pageData) => pageData) || [];
+
+  const handleLoadMore = async () => {
+    if (isFetchingNextPage || !hasNextPage) return;
+    await fetchNextPage();
   };
+
+  if (isLoading) {
+    return (
+      <div className="py-10 text-center">
+        <div className="mx-auto h-8 w-8 animate-spin rounded-full border-2 border-white/20 border-t-white"></div>
+        <p className="mt-2 text-gray-400">加载中...</p>
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="py-10 text-center">
+        <h3 className="text-xl text-red-500">获取博客列表失败</h3>
+      </div>
+    );
+  }
 
   if (issues.length === 0) {
     return (
@@ -53,13 +67,13 @@ export function BlogList({ initialIssues, initialPage }: BlogListClientProps) {
 
   return (
     <div className="mx-auto w-full max-w-4xl">
-      <h2 className="mb-6 text-2xl font-bold">博客列表</h2>
+      <h1 className="mb-6 text-center text-4xl font-bold">我的博客</h1>
       <div className="space-y-6">
         {issues.map((issue) => (
           <Link
             href={`/blog/${issue.number}`}
             key={issue.id}
-            className="block rounded-lg bg-white/5 p-6 transition-colors hover:bg-white/10"
+            className="block rounded-lg bg-white/5 p-6 shadow transition-colors hover:bg-white/10"
           >
             <h3 className="mb-2 text-xl font-semibold">{issue.title}</h3>
             <div className="mb-2 flex items-center text-sm text-gray-400">
@@ -97,13 +111,13 @@ export function BlogList({ initialIssues, initialPage }: BlogListClientProps) {
       </div>
 
       <div className="mt-12 flex justify-center">
-        {hasMore ? (
+        {hasNextPage ? (
           <button
             onClick={handleLoadMore}
-            disabled={isLoading || isFetching}
+            disabled={isFetchingNextPage}
             className="rounded-full bg-blue-600 px-8 py-3 text-white transition-all hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
           >
-            {isLoading || isFetching ? (
+            {isFetchingNextPage ? (
               <span className="flex items-center">
                 <span className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-white/20 border-t-white"></span>
                 加载中...

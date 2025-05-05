@@ -25,7 +25,7 @@ alwaysApply: true
 
 ## 编码规范
 
-- 使用 pnpm 作为包管理器，使用 `--exact` 模式安装依赖
+- 使用 pnpm 作为包管理器，使用 `--save-exact` 模式安装依赖
 - 使用 TypeScript 和 Next.js v15 App Router 版本和 React v19 版本书写
 - 使用 Tailwind CSS v4 书写 css, 使用 Tailwind CSS 实现响应式设计，使用移动端优先的方法
 - 使用 motion 添加动效

@@ -1,38 +1,67 @@
-import { useQuery } from "@tanstack/react-query";
+import { infiniteQueryOptions, queryOptions, useInfiniteQuery, useQuery } from "@tanstack/react-query";
 
-import type { IssueDetail, IssueListItem } from "@/core/entities/github-issue";
 import { GithubIssueService } from "@/core/services/github-issue";
 
 export const githubIssueQueryKey = {
-  issueList: (page: number, perPage: number) => ["issues", page, perPage],
+  issueInfiniteList: (perPage: number) => ["issues", "infinite", perPage],
   issueDetail: (issueId: number) => ["issue", issueId],
 } as const;
 
-interface UseIssueListOptions {
-  page?: number;
+export interface UseInfiniteIssueListOptions {
   perPage?: number;
+  initialPage?: number;
   enabled?: boolean;
+  isServerInitialLoad?: boolean;
 }
 
-export function useIssueList({ page = 1, perPage = 10, enabled = true }: UseIssueListOptions = {}) {
-  return useQuery<IssueListItem[]>({
-    queryKey: githubIssueQueryKey.issueList(page, perPage),
-    queryFn: () => GithubIssueService.getIssueList({ page, perPage }),
+export const infiniteIssueListOptions = (options: UseInfiniteIssueListOptions = {}) => {
+  const { perPage = 10, initialPage = 1, enabled = true, isServerInitialLoad = false } = options;
+
+  return infiniteQueryOptions({
+    queryKey: githubIssueQueryKey.issueInfiniteList(perPage),
+    queryFn: ({ pageParam }) => {
+      if (isServerInitialLoad) {
+        const serverPageSize = initialPage * perPage;
+        return GithubIssueService.getIssueList({ page: 1, perPage: serverPageSize });
+      }
+
+      const page = typeof pageParam === "number" ? pageParam : initialPage;
+      return GithubIssueService.getIssueList({ page, perPage });
+    },
+    initialPageParam: initialPage,
+    getNextPageParam: (lastPage, allPages, lastPageParam) => {
+      const expectedItemsCount = lastPageParam * perPage;
+      const actualItemsCount = allPages.reduce((acc, page) => acc + page.length, 0);
+
+      const hasNextPage = actualItemsCount === expectedItemsCount;
+      const nextPage = typeof lastPageParam === "number" ? lastPageParam + 1 : initialPage + 1;
+
+      return hasNextPage ? nextPage : undefined;
+    },
     enabled,
     staleTime: 1000 * 60 * 5,
   });
+};
+
+export function useInfiniteIssueList(options: UseInfiniteIssueListOptions = {}) {
+  const infiniteOptions = infiniteIssueListOptions({ ...options, isServerInitialLoad: false });
+  return useInfiniteQuery(infiniteOptions);
 }
 
-interface UseIssueDetailOptions {
-  issueId: number;
+export interface UseIssueDetailOptions {
+  issueNumber: number;
   enabled?: boolean;
 }
 
-export function useIssueDetail({ issueId, enabled = true }: UseIssueDetailOptions) {
-  return useQuery<IssueDetail | null>({
-    queryKey: githubIssueQueryKey.issueDetail(issueId),
-    queryFn: () => GithubIssueService.getIssueDetail(issueId),
-    enabled: enabled && !!issueId,
+export const issueDetailQueryOptions = ({ issueNumber, enabled = true }: UseIssueDetailOptions) =>
+  queryOptions({
+    queryKey: githubIssueQueryKey.issueDetail(issueNumber),
+    queryFn: () => GithubIssueService.getIssueDetail(issueNumber),
+    enabled: enabled && !!issueNumber,
     staleTime: 1000 * 60 * 5,
   });
+
+export function useIssueDetail({ issueNumber: issueId, enabled = true }: UseIssueDetailOptions) {
+  const detailOptions = issueDetailQueryOptions({ issueNumber: issueId, enabled: enabled && !!issueId });
+  return useQuery(detailOptions);
 }

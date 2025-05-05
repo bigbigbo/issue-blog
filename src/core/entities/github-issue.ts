@@ -1,6 +1,40 @@
 import type { Issue } from "@/core/datasources/github-issue";
 
-export function createIssue(data: Issue) {
+export interface IssueLabel {
+  id: number;
+  name: string;
+  color: string;
+}
+
+export interface IssueUser {
+  login: string;
+  avatar_url: string;
+}
+
+export interface IssueDetail {
+  id: number;
+  number: number;
+  title: string;
+  body: string;
+  created_at: string;
+  updated_at: string;
+  html_url: string;
+  user: IssueUser;
+  labels: IssueLabel[];
+}
+
+export interface IssueListItem {
+  id: number;
+  number: number;
+  title: string;
+  created_at: string;
+  updated_at: string;
+  html_url: string;
+  user: IssueUser;
+  labels: IssueLabel[];
+}
+
+export function createIssue(data: Issue): IssueDetail {
   return {
     id: data.id,
     number: data.number,
@@ -13,7 +47,7 @@ export function createIssue(data: Issue) {
       login: data.user.login,
       avatar_url: data.user.avatar_url,
     },
-    labels: data.labels.map((label: any) => ({
+    labels: data.labels.map((label) => ({
       id: label.id,
       name: label.name,
       color: label.color,
@@ -21,7 +55,7 @@ export function createIssue(data: Issue) {
   };
 }
 
-export function createIssueListItem(data: Issue) {
+export function createIssueListItem(data: Issue): IssueListItem {
   return {
     id: data.id,
     number: data.number,
@@ -33,14 +67,10 @@ export function createIssueListItem(data: Issue) {
       login: data.user.login,
       avatar_url: data.user.avatar_url,
     },
-    labels: data.labels.map((label: any) => ({
+    labels: data.labels.map((label) => ({
       id: label.id,
       name: label.name,
       color: label.color,
     })),
   };
 }
-
-export type IssueListItem = ReturnType<typeof createIssueListItem>;
-
-export type IssueDetail = ReturnType<typeof createIssue>;
