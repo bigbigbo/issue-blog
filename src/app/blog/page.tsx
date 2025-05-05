@@ -6,7 +6,7 @@ import { getQueryClient } from "@/utils/get-query-client";
 
 import { infiniteIssueListOptions } from "@/stories/github-issue";
 
-export const revalidate = 5 * 60;
+export const revalidate = 300;
 
 const perPage = 10;
 

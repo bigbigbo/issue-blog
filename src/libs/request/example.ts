@@ -1,5 +1,5 @@
 import request, { RequestClient } from "./index";
-import { KyRequestInterceptor, KyResponseInterceptor } from "./types";
+import type { KyRequestInterceptor, KyResponseInterceptor } from "./types";
 
 // 示例1：使用默认实例进行请求
 async function fetchData() {

@@ -1,8 +1,9 @@
+import { BookOpen } from "lucide-react";
+import Link from "next/link";
+
 import { BackgroundEffect } from "@/components/background-effect";
 import { Navbar } from "@/components/navbar";
 import { Profile } from "@/components/profile";
-import { BookOpen } from "lucide-react";
-import Link from "next/link";
 
 export default function Home() {
   return (

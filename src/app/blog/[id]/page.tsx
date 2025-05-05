@@ -6,9 +6,17 @@ import { BlogDetail } from "../_components/blog-detail";
 
 import { getQueryClient } from "@/utils/get-query-client";
 
-import { issueDetailQueryOptions } from "@/stories/github-issue";
+import { infiniteIssueListOptions, issueDetailQueryOptions } from "@/stories/github-issue";
 
-export const revalidate = 5 * 60;
+export const revalidate = 300;
+
+export async function generateStaticParams() {
+  const queryClient = getQueryClient();
+  const posts = await queryClient.fetchInfiniteQuery(
+    infiniteIssueListOptions({ perPage: 999, isServerInitialLoad: true }),
+  );
+  return posts.pages.flatMap((page) => page.map((post) => ({ id: post.number.toString() })));
+}
 
 export default async function BlogPost({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;

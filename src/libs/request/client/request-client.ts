@@ -1,5 +1,7 @@
-import ky, { Input, Options, ResponsePromise } from "ky";
-import { KyRequestInterceptor, KyResponseInterceptor, RequestOptions } from "../types";
+import type { Input, Options, ResponsePromise } from "ky";
+import ky from "ky";
+
+import type { KyRequestInterceptor, KyResponseInterceptor, RequestOptions } from "../types";
 
 export class RequestClient {
   private baseUrl: string = "";

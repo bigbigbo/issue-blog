@@ -1,4 +1,4 @@
-import { Input, NormalizedOptions, Options } from "ky";
+import type { Input, NormalizedOptions, Options } from "ky";
 
 export interface RequestOptions extends Omit<Options, "method" | "searchParams" | "json" | "body"> {
   method?: string;
