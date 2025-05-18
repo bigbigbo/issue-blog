@@ -21,6 +21,7 @@
     "ky": "1.8.1",
     "lucide-react": "0.503.0",
     "markdown-to-jsx": "^7.7.6",
+    "motion": "12.12.1",
     "next": "15.3.1",
     "nuqs": "2.4.3",
     "react": "^19.1.0",

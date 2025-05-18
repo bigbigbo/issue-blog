@@ -28,7 +28,7 @@ alwaysApply: true
 - 使用 pnpm 作为包管理器，使用 `--save-exact` 模式安装依赖
 - 使用 TypeScript 和 Next.js v15 App Router 版本和 React v19 版本书写
 - 使用 Tailwind CSS v4 书写 css, 使用 Tailwind CSS 实现响应式设计，使用移动端优先的方法
-- 使用 motion 添加动效
+- 使用 motion 添加动效，请注意不是 framer-motion，现在已经使用 motion 替换 framer-motion
 - 图标库使用 lucide-react
 - 使用函数式组件和 hooks, 避免类组件
 - 避免在条件句中使用不必要的大括号；对简单语句使用简洁的语法

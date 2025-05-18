@@ -5,5 +5,8 @@
     "source.fixAll": "always",
     "source.organizeImports": "always"
   },
-  "tailwindCSS.classFunctions": ["cva", "cx", "clsx", "cn"]
+  "tailwindCSS.classFunctions": ["cva", "cx", "clsx", "cn"],
+  "files.associations": {
+    "*.css": "tailwindcss"
+  }
 }

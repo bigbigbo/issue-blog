@@ -1,26 +1,28 @@
-import { BookOpen } from "lucide-react";
-import Link from "next/link";
+import type { Metadata } from "next";
 
-import { BackgroundEffect } from "@/components/background-effect";
-import { Navbar } from "@/components/navbar";
-import { Profile } from "@/components/profile";
+import Profile from "@/components/profile";
+import { SolarTermDisplay } from "@/components/solar-term";
 
-export default function Home() {
+import { getCurrentSolarTerm, SOLAR_TERMS } from "@/core/constants/solar-terms";
+
+export const metadata: Metadata = {
+  title: "二十四节气",
+  description: "展示当前节气、诗词和季节信息",
+};
+
+export default function SolarTermPage() {
+  const currentSolarTermKey = getCurrentSolarTerm();
+  const currentSolarTerm = SOLAR_TERMS[currentSolarTermKey];
+
   return (
-    <main className="relative flex min-h-screen flex-col">
-      <BackgroundEffect />
-      <div className="pointer-events-none fixed inset-0 bg-white/[0.02] backdrop-blur-2xl" />
-      <Navbar />
-      <div className="flex flex-1 flex-col items-center justify-center p-4">
-        <Profile />
-        <div className="mt-12">
-          <Link
-            href="/blog"
-            className="flex items-center justify-center rounded-lg bg-blue-600 px-6 py-3 text-lg font-medium text-white transition-all hover:bg-blue-700"
-          >
-            <BookOpen className="mr-2 h-5 w-5" />
-            查看我的博客
-          </Link>
+    <main className="relative flex min-h-screen w-full items-center justify-center px-4 py-8">
+      <div className="z-10 flex w-full max-w-7xl flex-col items-center justify-between gap-12 p-4 lg:flex-row">
+        <div className="w-full lg:w-1/2">
+          <Profile />
+        </div>
+
+        <div className="flex w-full justify-end lg:w-1/2">
+          <SolarTermDisplay name={currentSolarTerm.name} poem={currentSolarTerm.poem} />
         </div>
       </div>
     </main>
