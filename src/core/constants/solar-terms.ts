@@ -236,5 +236,5 @@ export const SOLAR_TERMS: Record<string, SolarTerm> = {
 
 // 获取当前节气
 export function getCurrentSolarTerm(): string {
-  return "lixia";
+  return "xiaoman";
 }
