@@ -170,7 +170,7 @@ export const SOLAR_TERMS: Record<string, SolarTerm> = {
   shuangjiang: {
     name: "霜降",
     poem: {
-      content: "霜降水返壑，风落木归山。",
+      content: "霜落水返壑，风落木归山。",
       author: "李白",
       title: "秋浦歌十七首",
     },
@@ -234,7 +234,204 @@ export const SOLAR_TERMS: Record<string, SolarTerm> = {
   },
 };
 
+import { SearchSunLongitude } from "astronomy-engine";
+
+// 节气定义 - 黄经度数与名称的映射
+const SOLAR_TERM_DEGREES: Record<number, string> = {
+  315: "lichun", // 立春，黄经315°
+  330: "yushui", // 雨水，黄经330°
+  345: "jingzhe", // 惊蛰，黄经345°
+  0: "chunfen", // 春分，黄经0°
+  15: "qingming", // 清明，黄经15°
+  30: "guyu", // 谷雨，黄经30°
+  45: "lixia", // 立夏，黄经45°
+  60: "xiaoman", // 小满，黄经60°
+  75: "mangzhong", // 芒种，黄经75°
+  90: "xiazhi", // 夏至，黄经90°
+  105: "xiaoshu", // 小暑，黄经105°
+  120: "dashu", // 大暑，黄经120°
+  135: "liqiu", // 立秋，黄经135°
+  150: "chushu", // 处暑，黄经150°
+  165: "bailu", // 白露，黄经165°
+  180: "qiufen", // 秋分，黄经180°
+  195: "hanlu", // 寒露，黄经195°
+  210: "shuangjiang", // 霜降，黄经210°
+  225: "lidong", // 立冬，黄经225°
+  240: "xiaoxue", // 小雪，黄经240°
+  255: "daxue", // 大雪，黄经255°
+  270: "dongzhi", // 冬至，黄经270°
+  285: "xiaohan", // 小寒，黄经285°
+  300: "dahan", // 大寒，黄经300°
+};
+
+// 获取指定年份的所有节气日期
+export function getSolarTermsForYear(year: number): Record<string, Date> {
+  const result: Record<string, Date> = {};
+
+  // 遍历所有节气
+  Object.entries(SOLAR_TERM_DEGREES).forEach(([degree, termKey]) => {
+    // 搜索太阳到达特定黄经的时间
+    // 设置搜索开始时间为当年1月1日
+    const startDate = new Date(year, 0, 1);
+
+    // 搜索太阳到达特定黄经的时间点
+    const time = SearchSunLongitude(parseFloat(degree), startDate, 366);
+
+    if (time) {
+      // 获取UTC日期并转换为本地日期
+      const date = new Date(time.date.getTime());
+
+      // 存储节气日期
+      result[termKey] = date;
+    }
+  });
+
+  return result;
+}
+
+// 获取两个节气之间的间隔天数
+function getDaysBetweenSolarTerms(date1: Date, date2: Date): number {
+  const oneDay = 24 * 60 * 60 * 1000; // 一天的毫秒数
+  return Math.round(Math.abs((date1.getTime() - date2.getTime()) / oneDay));
+}
+
 // 获取当前节气
 export function getCurrentSolarTerm(): string {
-  return "lixia";
+  const now = new Date();
+  const currentYear = now.getFullYear();
+
+  // 获取当年和下一年的节气日期
+  const thisYearTerms = getSolarTermsForYear(currentYear);
+  const nextYearTerms = getSolarTermsForYear(currentYear + 1);
+
+  // 合并当年和下一年的前两个节气（立春和雨水）以处理跨年的情况
+  const allTerms = {
+    ...thisYearTerms,
+    // 仅当当前日期接近年底时才需要考虑下一年的节气
+    ...(now.getMonth() >= 11
+      ? {
+          lichun_next: nextYearTerms.lichun,
+          yushui_next: nextYearTerms.yushui,
+        }
+      : {}),
+  };
+
+  // 查找当前所处的节气
+  let currentTerm = "";
+
+  // 按日期排序所有节气
+  const sortedTerms = Object.entries(allTerms).sort((a, b) => {
+    return a[1].getTime() - b[1].getTime();
+  });
+
+  // 查找当前日期所在的节气区间
+  for (let i = 0; i < sortedTerms.length - 1; i++) {
+    const [termKey, termDate] = sortedTerms[i];
+    const [, nextTermDateValue] = sortedTerms[i + 1];
+
+    if (now >= termDate && now < nextTermDateValue) {
+      currentTerm = termKey.replace("_next", "");
+      break;
+    }
+  }
+
+  // 如果没有找到（可能是今年最后一个节气到明年立春之间）
+  if (!currentTerm && sortedTerms.length > 0) {
+    const lastTerm = sortedTerms[sortedTerms.length - 1];
+    if (now >= lastTerm[1]) {
+      currentTerm = lastTerm[0].replace("_next", "");
+    }
+  }
+
+  // 如果仍然没找到，默认返回立春
+  return currentTerm || "lichun";
+}
+
+// 获取指定日期的节气信息
+export function getSolarTermInfo(date: Date = new Date()): {
+  current: {
+    key: string;
+    name: string;
+    date: Date;
+  };
+  next: {
+    key: string;
+    name: string;
+    date: Date;
+    daysUntil: number;
+  };
+} {
+  const currentYear = date.getFullYear();
+
+  // 获取当年和下一年的节气日期
+  const thisYearTerms = getSolarTermsForYear(currentYear);
+  const nextYearTerms = getSolarTermsForYear(currentYear + 1);
+
+  // 合并节气
+  const allTerms = {
+    ...thisYearTerms,
+    ...(date.getMonth() >= 11
+      ? {
+          lichun_next: nextYearTerms.lichun,
+          yushui_next: nextYearTerms.yushui,
+        }
+      : {}),
+  };
+
+  // 按日期排序所有节气
+  const sortedTerms = Object.entries(allTerms).sort((a, b) => {
+    return a[1].getTime() - b[1].getTime();
+  });
+
+  let currentTerm = "";
+  let currentTermDate: Date | null = null;
+  let nextTerm = "";
+  let nextTermDate: Date | null = null;
+
+  // 查找当前所在节气和下一个节气
+  for (let i = 0; i < sortedTerms.length - 1; i++) {
+    const [termKey, termDate] = sortedTerms[i];
+    const [nextTermKeyRaw, nextTermDateValue] = sortedTerms[i + 1];
+
+    if (date >= termDate && date < nextTermDateValue) {
+      currentTerm = termKey.replace("_next", "");
+      currentTermDate = termDate;
+      nextTerm = nextTermKeyRaw.replace("_next", "");
+      nextTermDate = nextTermDateValue;
+      break;
+    }
+  }
+
+  // 如果没有找到（可能是今年最后一个节气到明年立春之间）
+  if (!currentTerm && sortedTerms.length > 0) {
+    const lastTermIndex = sortedTerms.length - 1;
+    const lastTerm = sortedTerms[lastTermIndex];
+
+    if (date >= lastTerm[1]) {
+      currentTerm = lastTerm[0].replace("_next", "");
+      currentTermDate = lastTerm[1];
+
+      // 下一个节气是明年的第一个节气
+      const nextYearFirstTerm = Object.entries(nextYearTerms)[0];
+      nextTerm = nextYearFirstTerm[0];
+      nextTermDate = nextYearFirstTerm[1];
+    }
+  }
+
+  // 计算距离下一个节气的天数
+  const daysUntilNextTerm = nextTermDate ? getDaysBetweenSolarTerms(date, nextTermDate) : 0;
+
+  return {
+    current: {
+      key: currentTerm,
+      name: SOLAR_TERMS[currentTerm]?.name || "",
+      date: currentTermDate || new Date(),
+    },
+    next: {
+      key: nextTerm,
+      name: SOLAR_TERMS[nextTerm]?.name || "",
+      date: nextTermDate || new Date(),
+      daysUntil: daysUntilNextTerm,
+    },
+  };
 }
