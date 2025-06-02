@@ -10,7 +10,7 @@ interface MarkdownRendererProps {
 
 export function MarkdownRenderer({ content }: MarkdownRendererProps) {
   return (
-    <div className="markdown-body text-white">
+    <div className="markdown-body">
       <Markdown>{content}</Markdown>
     </div>
   );

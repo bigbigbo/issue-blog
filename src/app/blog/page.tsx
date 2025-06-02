@@ -25,7 +25,7 @@ export default async function BlogPage(props: { searchParams: Promise<{ page: st
   );
 
   return (
-    <main className="blog-page flex min-h-screen flex-col items-center justify-between p-6 md:p-12">
+    <main className="flex min-h-screen flex-col items-center justify-start p-6 md:p-12">
       <div className="mx-auto w-full max-w-4xl">
         <HydrationBoundary state={dehydrate(queryClient)}>
           <BlogList initialPage={initialPage} />

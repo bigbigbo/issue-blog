@@ -23,15 +23,9 @@ body {
   background: var(--background);
   font-family: var(--font-sans);
   overflow-x: hidden;
-  overflow-y: overlay;
 }
 
-/* 博客页面允许垂直滚动 */
-.blog-page {
-  overflow-y: auto;
-  height: 100vh;
-}
-
+/* 自定义滚动条样式 */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;

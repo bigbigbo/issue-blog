@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import localFont from "next/font/local";
 
+import { Navbar } from "@/components/navbar";
 import Providers from "@/components/providers";
 
 import { getCurrentSolarTerm, SOLAR_TERMS } from "@/core/constants/solar-terms";
@@ -379,7 +380,8 @@ export default function RootLayout({
         </div>
 
         <Providers>
-          <div className="relative z-10">{children}</div>
+          <Navbar />
+          <div className="relative z-10 pt-20">{children}</div>
         </Providers>
       </body>
     </html>

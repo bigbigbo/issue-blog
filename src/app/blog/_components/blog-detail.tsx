@@ -1,10 +1,12 @@
 "use client";
 
 import { Calendar, Clock, Tag } from "lucide-react";
+import { motion } from "motion/react";
 import Image from "next/image";
 
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 
+import { getCurrentSolarTerm, SOLAR_TERMS } from "@/core/constants/solar-terms";
 import type { IssueDetail } from "@/core/entities/github-issue";
 import { useIssueDetail } from "@/stories/github-issue";
 
@@ -20,6 +22,11 @@ export function BlogDetail({ issueNumber, initialPost }: BlogDetailProps) {
 
   const post = data || initialPost;
 
+  // 获取当前节气主题色
+  const currentSolarTermKey = getCurrentSolarTerm();
+  const currentSolarTerm = SOLAR_TERMS[currentSolarTermKey];
+  const themeColor = currentSolarTerm.themeColor;
+
   const formattedDate = new Date(post.created_at).toLocaleDateString("zh-CN", {
     year: "numeric",
     month: "long",
@@ -31,60 +38,127 @@ export function BlogDetail({ issueNumber, initialPost }: BlogDetailProps) {
   const readTime = Math.max(1, Math.ceil(wordCount / 200));
 
   return (
-    <article className="overflow-hidden rounded-2xl bg-white/[0.03] backdrop-blur-sm">
-      <header className="border-b border-white/10 bg-white/[0.05] px-8 py-10 md:px-12">
-        <h1 className="mb-6 bg-gradient-to-r from-white to-blue-100 bg-clip-text text-3xl font-bold text-transparent md:text-4xl lg:text-5xl">
-          {post.title}
+    <motion.article
+      className="overflow-hidden rounded-2xl border border-gray-200 backdrop-blur-sm"
+      style={{
+        background: `linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.9) 100%)`,
+        boxShadow: `0 20px 40px rgba(0,0,0,0.1), 0 0 20px ${themeColor}15`,
+      }}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+    >
+      <motion.header
+        className="border-b border-gray-200 px-8 py-10 md:px-12"
+        style={{
+          background: `linear-gradient(135deg, rgba(255,255,255,0.98) 0%, rgba(255,255,255,0.92) 100%)`,
+        }}
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.1 }}
+      >
+        <h1 className="mb-6 text-3xl font-bold text-black md:text-4xl lg:text-5xl">
+          <span
+            className="block"
+            style={{
+              textShadow: `0 1px 2px rgba(0,0,0,0.1)`,
+            }}
+          >
+            {post.title}
+          </span>
         </h1>
 
-        <div className="mb-6 flex flex-wrap items-center gap-6 text-white/70">
-          <div className="flex items-center">
-            <Calendar className="mr-2 h-4 w-4 text-blue-300" />
+        <div className="mb-6 flex flex-wrap items-center gap-6 text-black">
+          <motion.div className="flex items-center" whileHover={{ scale: 1.05 }} transition={{ duration: 0.2 }}>
+            <Calendar className="mr-2 h-4 w-4" style={{ color: themeColor }} />
             <span>{formattedDate}</span>
-          </div>
+          </motion.div>
 
-          <div className="flex items-center">
-            <Clock className="mr-2 h-4 w-4 text-blue-300" />
+          <motion.div className="flex items-center" whileHover={{ scale: 1.05 }} transition={{ duration: 0.2 }}>
+            <Clock className="mr-2 h-4 w-4" style={{ color: themeColor }} />
             <span>{readTime} 分钟阅读</span>
-          </div>
+          </motion.div>
 
-          <div className="flex items-center">
+          <motion.div className="flex items-center" whileHover={{ scale: 1.05 }} transition={{ duration: 0.2 }}>
             <Image
               src={post.user.avatar_url}
               alt={post.user.login}
-              className="mr-2 h-6 w-6 rounded-full ring-2 ring-white/20"
+              className="mr-2 h-6 w-6 rounded-full"
+              style={{
+                boxShadow: `0 0 0 2px ${themeColor}30`,
+              }}
               width={24}
               height={24}
             />
             <span>{post.user.login}</span>
-          </div>
+          </motion.div>
         </div>
 
         {post.labels.length > 0 && (
-          <div className="flex flex-wrap gap-2">
-            {post.labels.map((label) => (
-              <span
+          <motion.div
+            className="flex flex-wrap gap-2"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            {post.labels.map((label, index) => (
+              <motion.span
                 key={label.id}
-                className="inline-flex items-center rounded-full px-3 py-1 text-sm font-medium transition-transform hover:scale-105"
+                className="inline-flex items-center rounded-full px-3 py-1 text-sm font-medium"
                 style={{
-                  backgroundColor: `#${label.color}30`,
+                  backgroundColor: `#${label.color}15`,
                   color: `#${label.color}`,
-                  boxShadow: `0 0 12px #${label.color}30`,
+                  border: `1px solid #${label.color}30`,
+                  boxShadow: `0 2px 4px #${label.color}10`,
+                }}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.3, delay: 0.3 + index * 0.1 }}
+                whileHover={{
+                  scale: 1.05,
+                  boxShadow: `0 4px 8px #${label.color}20`,
                 }}
               >
                 <Tag className="mr-1.5 h-3.5 w-3.5" />
                 {label.name}
-              </span>
+              </motion.span>
             ))}
-          </div>
+          </motion.div>
         )}
-      </header>
+      </motion.header>
 
-      <div className="px-8 py-10 md:px-12">
-        <div className="prose prose-lg prose-invert prose-headings:text-white prose-headings:font-bold prose-headings:border-b prose-headings:border-blue-500/20 prose-headings:pb-2 prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl prose-h4:text-lg prose-p:text-white/90 prose-a:text-blue-300 prose-a:no-underline prose-a:font-medium prose-a:transition-all hover:prose-a:text-blue-200 hover:prose-a:underline prose-strong:text-white prose-strong:font-bold prose-em:text-blue-200 prose-em:italic prose-blockquote:border-l-blue-500 prose-blockquote:bg-white/5 prose-blockquote:p-4 prose-blockquote:rounded-r-md prose-blockquote:italic prose-blockquote:text-white/80 prose-ul:text-white/90 prose-ol:text-white/90 prose-li:my-1 prose-table:border-separate prose-table:border-spacing-0 prose-th:bg-white/10 prose-th:p-2 prose-th:text-white prose-th:font-medium prose-th:border-b prose-th:border-white/20 prose-td:p-2 prose-td:border-b prose-td:border-white/10 prose-td:text-white/80 prose-img:rounded-md prose-img:shadow-md prose-code:bg-white/10 prose-code:text-blue-200 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:font-normal prose-pre:bg-white/[0.07] prose-pre:rounded-xl prose-pre:shadow-inner prose-pre:border prose-pre:border-white/10 max-w-none">
+      <motion.div
+        className="px-8 py-10 md:px-12"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.6, delay: 0.3 }}
+      >
+        <div
+          className="prose prose-lg max-w-none"
+          style={
+            {
+              "--tw-prose-body": "rgb(0, 0, 0)",
+              "--tw-prose-headings": "rgb(0, 0, 0)",
+              "--tw-prose-lead": "rgb(31, 41, 55)",
+              "--tw-prose-links": themeColor,
+              "--tw-prose-bold": "rgb(0, 0, 0)",
+              "--tw-prose-counters": "rgb(55, 65, 81)",
+              "--tw-prose-bullets": themeColor,
+              "--tw-prose-hr": "rgb(229, 231, 235)",
+              "--tw-prose-quotes": "rgb(17, 24, 39)",
+              "--tw-prose-quote-borders": themeColor,
+              "--tw-prose-captions": "rgb(107, 114, 128)",
+              "--tw-prose-code": themeColor,
+              "--tw-prose-pre-code": "rgb(229, 231, 235)",
+              "--tw-prose-pre-bg": "rgb(31, 41, 55)",
+              "--tw-prose-th-borders": "rgb(229, 231, 235)",
+              "--tw-prose-td-borders": "rgb(243, 244, 246)",
+            } as React.CSSProperties
+          }
+        >
           <MarkdownRenderer content={post.body} />
         </div>
-      </div>
-    </article>
+      </motion.div>
+    </motion.article>
   );
 }
