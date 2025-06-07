@@ -6,25 +6,12 @@ import { motion, useScroll, useTransform } from "motion/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { getCurrentSolarTerm, SOLAR_TERMS } from "@/core/constants/solar-terms";
+import { useSolarTerm } from "@/hooks/use-solar-term";
 
 const navItems = [
   { name: "首页", path: "/" },
   { name: "博客", path: "/blog" },
 ];
-
-function getSeason(solarTermKey: string): string {
-  if (["lichun", "yushui", "jingzhe", "chunfen", "qingming", "guyu"].includes(solarTermKey)) {
-    return "spring";
-  }
-  if (["lixia", "xiaoman", "mangzhong", "xiazhi", "xiaoshu", "dashu"].includes(solarTermKey)) {
-    return "summer";
-  }
-  if (["liqiu", "chushu", "bailu", "qiufen", "hanlu", "shuangjiang"].includes(solarTermKey)) {
-    return "autumn";
-  }
-  return "winter";
-}
 
 export function Navbar() {
   const pathname = usePathname();
@@ -32,10 +19,7 @@ export function Navbar() {
   const { scrollY } = useScroll();
 
   // 获取当前节气信息
-  const currentSolarTermKey = getCurrentSolarTerm();
-  const currentSolarTerm = SOLAR_TERMS[currentSolarTermKey];
-  const season = getSeason(currentSolarTermKey);
-  const themeColor = currentSolarTerm.themeColor;
+  const { currentSolarTerm, season, themeColor } = useSolarTerm();
 
   // 监听滚动
   useEffect(() => {
