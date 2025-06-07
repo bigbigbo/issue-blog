@@ -31,17 +31,17 @@ export function Navbar() {
 
   // 动态变换值
   const navWidth = useTransform(scrollY, [0, 100], ["100%", "95%"]);
-  const navPadding = useTransform(scrollY, [0, 100], [24, 16]);
-  const navBorderRadius = useTransform(scrollY, [0, 100], [0, 24]);
-  const logoSize = useTransform(scrollY, [0, 100], [24, 20]);
+  const navPadding = useTransform(scrollY, [0, 100], [16, 12]);
+  const navBorderRadius = useTransform(scrollY, [0, 100], [0, 20]);
+  const logoSize = useTransform(scrollY, [0, 100], [20, 18]);
 
   return (
     <motion.nav
       className="fixed top-0 right-0 left-0 z-50 transition-all duration-300"
       style={{
-        paddingTop: isScrolled ? "12px" : "0px",
-        paddingLeft: isScrolled ? "16px" : "0px",
-        paddingRight: isScrolled ? "16px" : "0px",
+        paddingTop: isScrolled ? "8px" : "0px",
+        paddingLeft: isScrolled ? "12px" : "0px",
+        paddingRight: isScrolled ? "12px" : "0px",
       }}
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
@@ -93,7 +93,7 @@ export function Navbar() {
               <motion.span
                 className="font-bold text-black transition-all duration-300"
                 style={{
-                  fontSize: isScrolled ? "18px" : "22px",
+                  fontSize: isScrolled ? "16px" : "20px",
                   textShadow: `0 1px 2px rgba(255, 255, 255, 0.8)`,
                 }}
                 whileHover={{
@@ -106,7 +106,7 @@ export function Navbar() {
                 className="text-xs transition-all duration-300"
                 style={{
                   color: themeColor,
-                  fontSize: isScrolled ? "10px" : "12px",
+                  fontSize: isScrolled ? "9px" : "11px",
                   fontWeight: "500",
                   opacity: 0.9,
                 }}
@@ -121,7 +121,7 @@ export function Navbar() {
           </Link>
 
           {/* 导航菜单 */}
-          <ul className="flex items-center space-x-8">
+          <ul className="flex items-center space-x-6">
             {navItems.map((item, index) => (
               <motion.li
                 key={item.path}
@@ -129,13 +129,13 @@ export function Navbar() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 * index + 0.2 }}
               >
-                <Link href={item.path} className="group relative block py-2">
+                <Link href={item.path} className="group relative block py-1">
                   <motion.span
                     className={`relative font-medium transition-all duration-300 ${
                       pathname === item.path ? "text-black" : "text-gray-700 group-hover:text-black"
                     }`}
                     style={{
-                      fontSize: isScrolled ? "14px" : "16px",
+                      fontSize: isScrolled ? "13px" : "15px",
                       fontWeight: pathname === item.path ? "600" : "500",
                     }}
                     whileHover={{
