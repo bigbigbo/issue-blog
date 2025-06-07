@@ -1,3 +1,5 @@
+import { SearchSunLongitude } from "astronomy-engine";
+
 export interface SolarTerm {
   name: string;
   poem: {
@@ -233,8 +235,6 @@ export const SOLAR_TERMS: Record<string, SolarTerm> = {
     themeColor: "#94c6ff",
   },
 };
-
-import { SearchSunLongitude } from "astronomy-engine";
 
 // 节气定义 - 黄经度数与名称的映射
 const SOLAR_TERM_DEGREES: Record<number, string> = {
