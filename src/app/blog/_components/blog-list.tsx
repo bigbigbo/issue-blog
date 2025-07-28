@@ -40,7 +40,7 @@ export function BlogList({ initialPage }: BlogListClientProps) {
     }
   }, [data?.pageParams, page, setPage]);
 
-  const issues = data?.pages
+  const issues = (data?.pages || [])
     .flatMap((pageData) => pageData)
     .filter((issue) => {
       return issue.user.login === process.env.NEXT_PUBLIC_BLOG_AUTHOR;
