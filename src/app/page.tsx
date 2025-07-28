@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 
 import Profile from "@/components/profile";
-import { SolarTermDisplay } from "@/components/solar-term";
-
-import { getCurrentSolarTerm, SOLAR_TERMS } from "@/core/constants/solar-terms";
+import { DynamicSolarTermDisplay } from "@/components/solar-term";
 
 export const metadata: Metadata = {
   title: "二十四节气",
@@ -11,9 +9,6 @@ export const metadata: Metadata = {
 };
 
 export default function SolarTermPage() {
-  const currentSolarTermKey = getCurrentSolarTerm();
-  const currentSolarTerm = SOLAR_TERMS[currentSolarTermKey];
-
   return (
     <main className="relative w-full">
       {/* 主要内容区域 */}
@@ -24,7 +19,7 @@ export default function SolarTermPage() {
           </div>
 
           <div className="flex w-full justify-end lg:w-1/2">
-            <SolarTermDisplay name={currentSolarTerm.name} poem={currentSolarTerm.poem} />
+            <DynamicSolarTermDisplay />
           </div>
         </div>
       </section>
