@@ -11,6 +11,7 @@ import { getCurrentSolarTerm, SOLAR_TERMS } from "@/core/constants/solar-terms";
 import { infiniteIssueListOptions, issueDetailQueryOptions } from "@/stories/github-issue";
 
 export const revalidate = 300;
+export const dynamicParams = false;
 
 export async function generateStaticParams() {
   const queryClient = getQueryClient();
