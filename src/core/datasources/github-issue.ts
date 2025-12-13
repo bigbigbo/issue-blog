@@ -1,7 +1,16 @@
 import { githubClient } from "@/libs/request/github-client";
 
-const OWNER = "bigbigbo";
-const REPO = "issue-blog";
+const OWNER = process.env.GITHUB_REPO_OWNER;
+const REPO = process.env.GITHUB_REPO_NAME;
+
+if (!OWNER || !REPO) {
+  throw new Error(
+    "请在环境变量中设置 GITHUB_REPO_OWNER 和 GITHUB_REPO_NAME。\n" +
+      "请在 .env.development 文件中添加：\n" +
+      "GITHUB_REPO_OWNER=你的GitHub用户名\n" +
+      "GITHUB_REPO_NAME=你的仓库名称",
+  );
+}
 
 export interface Issue {
   id: number;
