@@ -35,6 +35,7 @@ export interface Issue {
     name: string;
     color: string;
   }[];
+  pull_request?: unknown;
 }
 
 export async function getIssueList({ page, perPage }: { page: number; perPage: number }) {
@@ -63,7 +64,9 @@ export async function getIssueList({ page, perPage }: { page: number; perPage: n
   const uniqueIssues = new Map<number, Issue>();
 
   responses.flat().forEach((issue) => {
-    uniqueIssues.set(issue.id, issue);
+    if (!issue.pull_request) {
+      uniqueIssues.set(issue.id, issue);
+    }
   });
 
   const startIndex = (page - 1) * perPage;
@@ -76,6 +79,50 @@ export async function getIssueList({ page, perPage }: { page: number; perPage: n
     .slice(startIndex, startIndex + perPage);
 
   return response;
+}
+
+export async function getAllIssueList() {
+  const authors = blogAuthors.length > 0 ? blogAuthors : [REPOSITORY_OWNER];
+  const responses = await Promise.all(
+    authors.map(async (creator) => {
+      const issues: Issue[] = [];
+
+      for (let page = 1; ; page += 1) {
+        const response = await githubClient
+          .get(`repos/${REPOSITORY_OWNER}/${REPOSITORY_NAME}/issues`, {
+            params: {
+              state: "open",
+              sort: "created",
+              direction: "desc",
+              page: String(page),
+              per_page: "100",
+              creator,
+            },
+          })
+          .json<Issue[]>();
+
+        issues.push(...response.filter((issue) => !issue.pull_request));
+
+        if (response.length < 100) {
+          break;
+        }
+      }
+
+      return issues;
+    }),
+  );
+
+  const uniqueIssues = new Map<number, Issue>();
+
+  responses.flat().forEach((issue) => {
+    uniqueIssues.set(issue.id, issue);
+  });
+
+  return Array.from(uniqueIssues.values()).sort(
+    (left, right) =>
+      Date.parse(extractPublishedAt(right.body, right.created_at)) -
+      Date.parse(extractPublishedAt(left.body, left.created_at)),
+  );
 }
 
 export async function getIssueDetail(issueNumber: number) {

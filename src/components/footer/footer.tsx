@@ -5,6 +5,7 @@ import Link from "next/link";
 const footerLinks = [
   { label: "首页", href: "/" },
   { label: "博客", href: "/blog" },
+  { label: "节气", href: "/solar-term" },
 ] as const;
 
 export function Footer() {

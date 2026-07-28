@@ -66,6 +66,12 @@ export function BlogDetail({ issueNumber, initialPost }: BlogDetailProps) {
               </dd>
             </div>
             <div>
+              <dt>最近更新</dt>
+              <dd>
+                <time dateTime={post.updated_at}>{readerDateFormatter.format(new Date(post.updated_at))}</time>
+              </dd>
+            </div>
+            <div>
               <dt>阅读时间</dt>
               <dd>{readTime} 分钟</dd>
             </div>

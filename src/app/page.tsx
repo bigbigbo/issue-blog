@@ -5,17 +5,21 @@ import { EditorialHome } from "@/components/home";
 
 import { getQueryClient } from "@/utils/get-query-client";
 
+import { getAllBlogPosts } from "@/core/services/blog-content";
 import {
   resolveDevelopmentDate,
   resolveDevelopmentFixture,
   resolveDevelopmentReducedMotion,
 } from "@/core/utils/development-fixtures";
-import { infiniteIssueListOptions } from "@/stories/github-issue";
+import { createPageMetadata } from "@/core/utils/seo";
+import { githubIssueQueryKey } from "@/stories/github-issue";
 
-export const metadata: Metadata = {
-  title: "二十四节气",
-  description: "以二十四节气为线索，阅读 Bigbigbo 的技术笔记与生活观察。",
-};
+export const metadata: Metadata = createPageMetadata({
+  title: "Bigbigbo｜技术笔记、产品思考与二十四节气",
+  description: "以二十四节气为时间线索，阅读 Bigbigbo 关于软件工程、AI 编程、产品思考与生活观察的最新文章。",
+  path: "/",
+  absoluteTitle: true,
+});
 
 export const revalidate = 300;
 
@@ -36,13 +40,13 @@ export default async function HomePage({ searchParams }: HomePageProps) {
   const queryClient = getQueryClient();
 
   if (fixture === null || fixture === "exhausted") {
-    await queryClient.prefetchInfiniteQuery(
-      infiniteIssueListOptions({
-        initialPage: 1,
-        perPage: 6,
-        isServerInitialLoad: true,
-      }),
-    );
+    try {
+      const posts = await getAllBlogPosts();
+      queryClient.setQueryData(githubIssueQueryKey.issueInfiniteList(6), {
+        pages: [posts.slice(0, 6)],
+        pageParams: [1],
+      });
+    } catch {}
   }
 
   return (

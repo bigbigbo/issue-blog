@@ -26,7 +26,7 @@ export function extractPlainTextExcerpt(markdown: string, maximumLength = 152): 
   const plainText = decodeCommonEntities(
     markdown
       .replace(/```[\s\S]*?```/g, " ")
-      .replace(/!\[([^\]]*)\]\([^)]*\)/g, "$1")
+      .replace(/!\[([^\]]*)\]\([^)]*\)/g, " ")
       .replace(/<img[^>]*>/gi, " ")
       .replace(/\[([^\]]+)\]\([^)]*\)/g, "$1")
       .replace(/<[^>]+>/g, " ")

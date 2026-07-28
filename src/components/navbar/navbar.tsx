@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 const navItems = [
   { name: "首页", path: "/" },
   { name: "博客", path: "/blog" },
+  { name: "节气", path: "/solar-term" },
 ] as const;
 
 export function Navbar() {

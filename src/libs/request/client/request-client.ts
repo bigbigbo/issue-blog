@@ -116,7 +116,7 @@ export class RequestClient {
   }: RequestOptions): ResponsePromise<T> {
     const options: Options = {
       method,
-      headers,
+      ...(headers ? { headers } : {}),
       ...rest,
     };
 

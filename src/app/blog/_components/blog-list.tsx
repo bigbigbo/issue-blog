@@ -96,9 +96,18 @@ export function BlogList({ initialPage, fixture }: BlogListProps) {
     void refetch();
   };
 
-  const handleLoadMore = async () => {
+  const handleLoadMore = async (fallbackHref: string) => {
     if (isFetchingNextPage || !hasNextPage || fixture === "exhausted") return;
-    await fetchNextPage();
+
+    try {
+      const result = await fetchNextPage();
+
+      if (result.isError) {
+        router.push(fallbackHref);
+      }
+    } catch {
+      router.push(fallbackHref);
+    }
   };
 
   if (fixture === "loading" || (isLoading && fixture !== "empty")) {
@@ -141,6 +150,10 @@ export function BlogList({ initialPage, fixture }: BlogListProps) {
   }
 
   const isExhausted = fixture === "exhausted" || !hasNextPage;
+  const nextPageSearchParams = new URLSearchParams(searchParams.toString());
+  const nextPage = Number.parseInt(page, 10) + 1;
+  nextPageSearchParams.set("page", String(Number.isFinite(nextPage) ? nextPage : initialPage + 1));
+  const nextPageHref = `${pathname}?${nextPageSearchParams.toString()}`;
 
   return (
     <>
@@ -207,15 +220,18 @@ export function BlogList({ initialPage, fixture }: BlogListProps) {
           </p>
         ) : (
           <>
-            <button
-              type="button"
+            <a
+              href={nextPageHref}
               className="editorial-action editorial-action--solid"
-              onClick={handleLoadMore}
-              disabled={isFetchingNextPage}
+              onClick={(event) => {
+                event.preventDefault();
+                void handleLoadMore(nextPageHref);
+              }}
+              aria-disabled={isFetchingNextPage}
             >
               {isFetchingNextPage ? "正在加载更多文章" : "加载更多"}
               {!isFetchingNextPage && <ArrowRight aria-hidden="true" />}
-            </button>
+            </a>
             <p className="archive-pagination__status">
               {isFetchingNextPage ? "新文章正在加入当前列表" : `当前第 ${page} 页`}
             </p>
