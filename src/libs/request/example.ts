@@ -75,7 +75,7 @@ function createApiClient() {
       } catch (error) {
         console.error("刷新令牌失败:", error);
         // 重定向到登录页或其他处理
-        window.location.href = "/login";
+        window.location.href = new URL("/login", window.location.origin).href;
       }
     }
     return response;

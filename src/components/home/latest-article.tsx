@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
@@ -44,12 +44,6 @@ export function LatestArticle({ fixture, forceReducedMotion = false }: LatestArt
       .filter((issue) => isBlogAuthor(issue.user.login))
       .slice(0, 6);
   }, [data?.pages]);
-
-  useEffect(() => {
-    if (activeIndex >= articles.length) {
-      setActiveIndex(0);
-    }
-  }, [activeIndex, articles.length]);
 
   const clearFixture = () => {
     const nextSearchParams = new URLSearchParams(searchParams.toString());
@@ -110,14 +104,15 @@ export function LatestArticle({ fixture, forceReducedMotion = false }: LatestArt
     );
   }
 
-  const activeArticle = articles[activeIndex];
+  const displayedIndex = activeIndex % articles.length;
+  const activeArticle = articles[displayedIndex];
   const canCycle = articles.length > 1;
-  const activeImageSource = activeIndex === 0 ? "/images/editorial/article-shadows.png" : activeArticle.leadImage;
-  const activeImageAlt = activeIndex === 0 ? "树影落在墙面上的编辑照片" : `${activeArticle.title}的文章题图`;
+  const activeImageSource = displayedIndex === 0 ? "/images/editorial/article-shadows.png" : activeArticle.leadImage;
+  const activeImageAlt = displayedIndex === 0 ? "树影落在墙面上的编辑照片" : `${activeArticle.title}的文章题图`;
   const liveMessage =
-    activeIndex === 0
+    displayedIndex === 0
       ? `当前显示最新文章：${activeArticle.title}`
-      : `已切换至第 ${String(activeIndex + 1).padStart(2, "0")} 篇：${activeArticle.title}`;
+      : `已切换至第 ${String(displayedIndex + 1).padStart(2, "0")} 篇：${activeArticle.title}`;
 
   const showPrevious = () => {
     setActiveIndex((currentIndex) => (currentIndex - 1 + articles.length) % articles.length);
@@ -135,8 +130,8 @@ export function LatestArticle({ fixture, forceReducedMotion = false }: LatestArt
       </div>
 
       <div className="latest-article__index">
-        <span>{String(activeIndex + 1).padStart(2, "0")}</span>
-        <small>{activeIndex === 0 ? "/ 最新" : `/ ${String(articles.length).padStart(2, "0")}`}</small>
+        <span>{String(displayedIndex + 1).padStart(2, "0")}</span>
+        <small>{displayedIndex === 0 ? "/ 最新" : `/ ${String(articles.length).padStart(2, "0")}`}</small>
         <div className="latest-article__controls">
           <button type="button" onClick={showPrevious} disabled={!canCycle} aria-label="上一篇文章">
             <ArrowLeft aria-hidden="true" />

@@ -16,20 +16,21 @@ export default function SolarTermPage() {
   const [allTermDates, setAllTermDates] = useState<Record<string, Date>>({});
 
   useEffect(() => {
-    // 获取当前节气
-    const term = getCurrentSolarTerm();
-    setCurrentTerm(term);
+    let cancelled = false;
 
-    // 获取详细节气信息
-    const info = getSolarTermInfo();
-    setTermInfo(info);
+    void import("@/core/constants/solar-terms").then(({ getSolarTermsForYear }) => {
+      if (cancelled) {
+        return;
+      }
 
-    // 获取今年所有节气的日期
-    const currentYear = new Date().getFullYear();
-    import("@/core/constants/solar-terms").then(({ getSolarTermsForYear }) => {
-      const terms = getSolarTermsForYear(currentYear);
-      setAllTermDates(terms);
+      setCurrentTerm(getCurrentSolarTerm());
+      setTermInfo(getSolarTermInfo());
+      setAllTermDates(getSolarTermsForYear(new Date().getFullYear()));
     });
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   if (!currentTerm || !termInfo) {

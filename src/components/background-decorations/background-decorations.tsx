@@ -1,3 +1,8 @@
+function seededValue(index: number, salt: number) {
+  const value = Math.sin(index * 12.9898 + salt * 78.233) * 43758.5453;
+  return value - Math.floor(value);
+}
+
 function getSeasonalElements(season: string, themeColor: string) {
   switch (season) {
     case "spring":
@@ -10,14 +15,14 @@ function getSeasonalElements(season: string, themeColor: string) {
               key={`petal-${i}`}
               className="absolute opacity-10"
               style={{
-                width: `${Math.random() * 20 + 10}px`,
-                height: `${Math.random() * 10 + 5}px`,
+                width: `${seededValue(i, 1) * 20 + 10}px`,
+                height: `${seededValue(i, 2) * 10 + 5}px`,
                 backgroundColor: themeColor,
                 borderRadius: "50%",
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                transform: `rotate(${Math.random() * 360}deg)`,
-                animation: `float-around ${Math.random() * 40 + 20}s linear infinite`,
+                left: `${seededValue(i, 3) * 100}%`,
+                top: `${seededValue(i, 4) * 100}%`,
+                transform: `rotate(${seededValue(i, 5) * 360}deg)`,
+                animation: `float-around ${seededValue(i, 6) * 40 + 20}s linear infinite`,
               }}
             />
           ))}
@@ -29,13 +34,13 @@ function getSeasonalElements(season: string, themeColor: string) {
               style={{
                 width: 0,
                 height: 0,
-                borderLeft: `${Math.random() * 10 + 5}px solid transparent`,
-                borderRight: `${Math.random() * 10 + 5}px solid transparent`,
-                borderBottom: `${Math.random() * 20 + 15}px solid ${themeColor}20`,
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                transform: `rotate(${Math.random() * 360}deg)`,
-                animation: `float-around ${Math.random() * 50 + 30}s linear infinite`,
+                borderLeft: `${seededValue(i, 11) * 10 + 5}px solid transparent`,
+                borderRight: `${seededValue(i, 12) * 10 + 5}px solid transparent`,
+                borderBottom: `${seededValue(i, 13) * 20 + 15}px solid ${themeColor}20`,
+                left: `${seededValue(i, 14) * 100}%`,
+                top: `${seededValue(i, 15) * 100}%`,
+                transform: `rotate(${seededValue(i, 16) * 360}deg)`,
+                animation: `float-around ${seededValue(i, 17) * 50 + 30}s linear infinite`,
               }}
             />
           ))}
@@ -51,19 +56,19 @@ function getSeasonalElements(season: string, themeColor: string) {
               key={`sunray-${i}`}
               className="absolute opacity-10"
               style={{
-                width: `${Math.random() * 30 + 20}px`,
-                height: `${Math.random() * 2 + 1}px`,
+                width: `${seededValue(i, 21) * 30 + 20}px`,
+                height: `${seededValue(i, 22) * 2 + 1}px`,
                 backgroundColor: themeColor,
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                transform: `rotate(${Math.random() * 360}deg)`,
-                animation: `float-around ${Math.random() * 60 + 40}s linear infinite`,
+                left: `${seededValue(i, 23) * 100}%`,
+                top: `${seededValue(i, 24) * 100}%`,
+                transform: `rotate(${seededValue(i, 25) * 360}deg)`,
+                animation: `float-around ${seededValue(i, 26) * 60 + 40}s linear infinite`,
               }}
             />
           ))}
           {/* 水波纹：多个同心圆 */}
           {Array.from({ length: 5 }).map((_, i) => {
-            const size = Math.random() * 100 + 50;
+            const size = seededValue(i, 31) * 100 + 50;
             return (
               <div
                 key={`ripple-${i}`}
@@ -73,9 +78,9 @@ function getSeasonalElements(season: string, themeColor: string) {
                   height: `${size}px`,
                   border: `1px solid ${themeColor}`,
                   borderRadius: "50%",
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
-                  animation: `ripple ${Math.random() * 20 + 10}s ease-out infinite`,
+                  left: `${seededValue(i, 32) * 100}%`,
+                  top: `${seededValue(i, 33) * 100}%`,
+                  animation: `ripple ${seededValue(i, 34) * 20 + 10}s ease-out infinite`,
                 }}
               />
             );
@@ -92,14 +97,14 @@ function getSeasonalElements(season: string, themeColor: string) {
               key={`leaf-${i}`}
               className="absolute opacity-10"
               style={{
-                width: `${Math.random() * 15 + 10}px`,
-                height: `${Math.random() * 15 + 10}px`,
+                width: `${seededValue(i, 41) * 15 + 10}px`,
+                height: `${seededValue(i, 42) * 15 + 10}px`,
                 backgroundColor: `${themeColor}40`,
                 borderRadius: "2px 15px 2px 15px",
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                transform: `rotate(${Math.random() * 360}deg)`,
-                animation: `falling ${Math.random() * 50 + 30}s linear infinite`,
+                left: `${seededValue(i, 43) * 100}%`,
+                top: `${seededValue(i, 44) * 100}%`,
+                transform: `rotate(${seededValue(i, 45) * 360}deg)`,
+                animation: `falling ${seededValue(i, 46) * 50 + 30}s linear infinite`,
               }}
             />
           ))}
@@ -109,14 +114,14 @@ function getSeasonalElements(season: string, themeColor: string) {
               key={`maple-${i}`}
               className="absolute opacity-8"
               style={{
-                width: `${Math.random() * 20 + 15}px`,
-                height: `${Math.random() * 20 + 15}px`,
+                width: `${seededValue(i, 51) * 20 + 15}px`,
+                height: `${seededValue(i, 52) * 20 + 15}px`,
                 borderRadius: "0 50% 50% 50%",
                 border: `1px solid ${themeColor}`,
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                transform: `rotate(${Math.random() * 360}deg)`,
-                animation: `float-around ${Math.random() * 40 + 30}s linear infinite`,
+                left: `${seededValue(i, 53) * 100}%`,
+                top: `${seededValue(i, 54) * 100}%`,
+                transform: `rotate(${seededValue(i, 55) * 360}deg)`,
+                animation: `float-around ${seededValue(i, 56) * 40 + 30}s linear infinite`,
               }}
             />
           ))}
@@ -132,19 +137,19 @@ function getSeasonalElements(season: string, themeColor: string) {
               key={`snow-${i}`}
               className="absolute opacity-20"
               style={{
-                width: `${Math.random() * 5 + 2}px`,
-                height: `${Math.random() * 5 + 2}px`,
+                width: `${seededValue(i, 61) * 5 + 2}px`,
+                height: `${seededValue(i, 62) * 5 + 2}px`,
                 backgroundColor: themeColor,
                 borderRadius: "50%",
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animation: `snowfall ${Math.random() * 60 + 30}s linear infinite`,
+                left: `${seededValue(i, 63) * 100}%`,
+                top: `${seededValue(i, 64) * 100}%`,
+                animation: `snowfall ${seededValue(i, 65) * 60 + 30}s linear infinite`,
               }}
             />
           ))}
           {/* 冰晶：简化为六角星 */}
           {Array.from({ length: 8 }).map((_, i) => {
-            const size = Math.random() * 15 + 10;
+            const size = seededValue(i, 71) * 15 + 10;
             return (
               <div
                 key={`crystal-${i}`}
@@ -153,8 +158,8 @@ function getSeasonalElements(season: string, themeColor: string) {
                   width: size,
                   height: size,
                   position: "absolute",
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
+                  left: `${seededValue(i, 72) * 100}%`,
+                  top: `${seededValue(i, 73) * 100}%`,
                 }}
               >
                 <div
@@ -214,13 +219,13 @@ export default function BackgroundDecorations({ themeColor, season }: { themeCol
             className="absolute rounded-full opacity-10"
             style={{
               backgroundColor: themeColor,
-              width: `${Math.random() * 8 + 2}px`,
-              height: `${Math.random() * 8 + 2}px`,
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDuration: `${Math.random() * 50 + 50}s`,
-              animationDelay: `${Math.random() * 5}s`,
-              animation: `float-around ${Math.random() * 30 + 30}s linear infinite`,
+              width: `${seededValue(i, 81) * 8 + 2}px`,
+              height: `${seededValue(i, 82) * 8 + 2}px`,
+              left: `${seededValue(i, 83) * 100}%`,
+              top: `${seededValue(i, 84) * 100}%`,
+              animationDuration: `${seededValue(i, 85) * 50 + 50}s`,
+              animationDelay: `${seededValue(i, 86) * 5}s`,
+              animation: `float-around ${seededValue(i, 87) * 30 + 30}s linear infinite`,
             }}
           />
         ))}

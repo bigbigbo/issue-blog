@@ -6,7 +6,7 @@ Always responded in 中文
 
 ## 项目概览
 
-这是一个基于 Next.js 15 的博客应用，使用 GitHub Issues 作为 CMS，并显示基于天文计算的中国二十四节气。该应用具有动态季节背景和简洁的响应式设计。
+这是一个基于 Next.js 16.3 Preview 的博客应用，使用 GitHub Issues 作为 CMS，并显示基于天文计算的中国二十四节气。该应用具有动态季节背景和简洁的响应式设计。
 
 ## 基本命令
 
@@ -29,6 +29,9 @@ pnpm lint
 
 # 运行 Storybook 进行组件开发
 pnpm storybook
+
+# 运行 Storybook 浏览器测试
+pnpm exec vitest run
 ```
 
 ### 代码质量
@@ -141,7 +144,17 @@ ESLint 强制执行严格的导入顺序：
 ## 测试
 
 - **单元测试**: 使用 Vitest 和浏览器集成
-- **组件测试**: 使用 Storybook 和实验性测试插件
+- **组件测试**: 使用 Storybook 10 和 addon-vitest
 - **浏览器测试**: 可用的 Playwright 集成
 
 通过 Storybook 界面运行测试，或配置 Vitest 进行命令行测试。
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->

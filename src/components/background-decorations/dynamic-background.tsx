@@ -9,24 +9,18 @@ import type { SolarTermSeason } from "@/core/constants/solar-terms";
 
 export function DynamicBackground() {
   const { season, themeColor } = useSolarTerm();
-  const [activeTheme, setActiveTheme] = useState<SeasonalThemeDetail>({
+  const [themeOverride, setThemeOverride] = useState<SeasonalThemeDetail | null>(null);
+  const activeTheme = themeOverride ?? {
     season: season as SolarTermSeason,
     themeColor,
-  });
-
-  useEffect(() => {
-    setActiveTheme({
-      season: season as SolarTermSeason,
-      themeColor,
-    });
-  }, [season, themeColor]);
+  };
 
   useEffect(() => {
     const handleThemeChange = (event: Event) => {
       const { detail } = event as CustomEvent<SeasonalThemeDetail>;
 
       if (detail?.season && detail?.themeColor) {
-        setActiveTheme(detail);
+        setThemeOverride(detail);
       }
     };
 
@@ -39,7 +33,7 @@ export function DynamicBackground() {
 
     root.dataset.season = activeTheme.season;
     root.style.setProperty("--season-accent", activeTheme.themeColor);
-  }, [activeTheme]);
+  }, [activeTheme.season, activeTheme.themeColor]);
 
   return <div className="seasonal-backdrop" data-season={activeTheme.season} aria-hidden="true" />;
 }
