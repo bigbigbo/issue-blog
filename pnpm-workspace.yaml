@@ -1,8 +1,8 @@
 allowBuilds:
-  core-js-pure: set this to true or false
-  esbuild: set this to true or false
-  sharp: set this to true or false
-  unrs-resolver: set this to true or false
+  core-js-pure: false
+  esbuild: true
+  sharp: true
+  unrs-resolver: true
 minimumReleaseAgeExclude:
   - "@storybook/addon-docs@10.5.5"
   - "@storybook/addon-onboarding@10.5.5"
