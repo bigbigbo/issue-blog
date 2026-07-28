@@ -138,7 +138,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh-CN">
-      <body className={`${lxgwWenKai.variable} antialiased`}>
+      <body id="site-top" className={`${lxgwWenKai.variable} antialiased`}>
         <JsonLd data={siteJsonLd} />
         <DynamicBackground />
         <PaperTexture />
