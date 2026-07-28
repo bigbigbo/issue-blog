@@ -3,10 +3,12 @@ import localFont from "next/font/local";
 
 import { DynamicBackground } from "@/components/background-decorations";
 import { PaperTexture } from "@/components/editorial";
+import { Footer } from "@/components/footer";
 import { Navbar } from "@/components/navbar";
 import Providers from "@/components/providers";
 
 import "./globals.css";
+import "@/components/footer/footer.css";
 
 const lxgwWenKai = localFont({
   src: "../../public/fonts/LXGWWenKai-Medium.woff2",
@@ -40,6 +42,7 @@ export default function RootLayout({
           </a>
           <Navbar />
           <div className="site-content">{children}</div>
+          <Footer />
         </Providers>
       </body>
     </html>
