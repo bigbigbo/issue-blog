@@ -1,4 +1,5 @@
 import { ArrowUp, ArrowUpRight, CircleDot } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 
 const footerLinks = [
@@ -12,13 +13,41 @@ export function Footer() {
       <div className="editorial-footer__grid">
         <div className="editorial-footer__index" aria-hidden="true">
           <span>END / 页尾</span>
-          <strong>续</strong>
+          <strong data-shadow="续">续</strong>
           <small>TO BE CONTINUED</small>
         </div>
 
         <section className="editorial-footer__statement">
+          <Image
+            className="editorial-footer__artwork"
+            src="/images/editorial/footer-collage.png"
+            alt=""
+            fill
+            sizes="(max-width: 767px) 100vw, 60vw"
+            loading="eager"
+            aria-hidden="true"
+          />
           <p className="editorial-footer__eyebrow">BIGBIGBO / ISSUE BLOG</p>
-          <h2 id="editorial-footer-title">记录仍在继续。</h2>
+          <h2 id="editorial-footer-title">
+            <span
+              className="editorial-footer__title-shadow editorial-footer__title-shadow--vermilion"
+              aria-hidden="true"
+            >
+              记录仍在
+              <br />
+              继续。
+            </span>
+            <span className="editorial-footer__title-shadow editorial-footer__title-shadow--acid" aria-hidden="true">
+              记录仍在
+              <br />
+              继续。
+            </span>
+            <span className="editorial-footer__title-text">
+              记录仍在
+              <br />
+              继续。
+            </span>
+          </h2>
           <p className="editorial-footer__description">把技术、思想与生活，写进时间的纹理。</p>
         </section>
 

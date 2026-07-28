@@ -50,6 +50,23 @@
 - Mobile capture pixels: `381 x 2423`, captured from a `390 x 844` CSS viewport at device pixel ratio `1`.
 - State: `2026-07-28`, current term `大暑`, with the xuan-paper surface and summer accent.
 
+## Review 5 footer comparison target
+
+- Source visual truth for preserved structure and copy: `.mission-control/footer-redesign-20260728/reference-current-footer.png`
+- User direction: add a strong contrasting palette, retain the large display glyphs, give them a faint projected shadow, and add irregular linework or geometric decoration behind the copy.
+- Final browser-rendered desktop footer: `.mission-control/footer-redesign-20260728/evidence/footer-desktop-final-1098.jpg`
+- Final browser-rendered mobile footer: `.mission-control/footer-redesign-20260728/evidence/footer-mobile-final-390.jpg`
+- Full-view before-and-after comparison: `.mission-control/footer-redesign-20260728/evidence/footer-before-after-final.jpg`
+- CSS viewport: `1098 x 800` desktop and `390 x 844` mobile.
+- Device pixel ratio: `1`.
+- Source pixels: `1098 x 386`.
+- Desktop implementation pixels: `1089 x 443`; the 9-pixel difference is the browser scrollbar.
+- Mobile implementation pixels: `381 x 959`; the final full-page browser capture was cropped to the footer bounds at `y 2113`.
+- Normalization: the source was resized to `1089 x 383` and padded to `1089 x 443`, then placed beside the equal-width implementation capture.
+- State: homepage with `fixture=empty`, date `2026-07-28`, footer at the end of the document.
+- Focused comparison: a second crop was not needed because the complete footer, display typography, small labels, linework, and navigation remain legible in the `2178 x 443` full-view comparison.
+- The round pet marks visible in some live Chrome captures are browser overlays outside the application DOM and are excluded from visual judgment.
+
 ## Findings
 
 - No actionable P0, P1, or P2 findings remain.
@@ -77,6 +94,19 @@
 - States and interactions: term selection, keyboard roving focus, latest-article controls, blog pagination, retry, loading, empty, exhausted, skip-link, and reduced-motion states were exercised.
 - Responsiveness: desktop at `1488 x 1058` and `1440 x 1000`, mobile at `390 x 844`, and overflow at `320` pixels were checked. The final mobile document width equals the viewport width and long article URLs wrap safely.
 - Accessibility: semantic buttons and links, visible focus, skip navigation, `aria-current`, live announcements, keyboard activation, 44-pixel mobile targets, alt text, and reduced-motion behavior were checked.
+
+## Review 5 footer findings and fidelity
+
+- No actionable P0, P1, or P2 footer findings remain.
+- Fonts and typography: the Song-style display type and monospaced utility labels are preserved. The large `续` uses two restrained offset shadows, while the statement title uses separate vermilion and acid outline copies with blur and low opacity.
+- Spacing and layout rhythm: the final desktop tracks measure `210`, `613.891`, and `263.094` pixels within the `1089`-pixel content width. The complete footer is `443` pixels high. Mobile stacks the three panels and metadata into a `381 x 959` footer with no clipping.
+- Colors and visual tokens: acid `#c7f23a`, ink `#11110f`, vermilion `#f0441e`, and paper `#f8f7f1` create the requested collision. Ink on vermilion has a `5.00:1` contrast ratio, ink on acid has `14.57:1`, and paper on ink has `17.61:1`.
+- Image quality and asset fidelity: `/images/editorial/footer-collage.png` is a real `2172 x 724` raster asset with irregular contour lines, print fragments, and geometric forms. It is cropped with `object-fit: cover`, kept at `0.16` opacity, and remains subordinate to the text.
+- Copy and content: all existing footer labels, statement copy, navigation destinations, identity text, and back-to-top copy are unchanged.
+- Icons: existing Lucide arrows and the existing circular identity mark remain consistent with the rest of the site.
+- States and interactions: the home and blog links remain semantic links. The back-to-top link was activated and moved the page to `#main-content` at `scrollY 80`.
+- Responsiveness: desktop and mobile captures show the same information hierarchy. Mobile document width and client width both measured `381` pixels, with no horizontal overflow.
+- Accessibility: decorative image and duplicated shadow text are excluded from the accessible name. The final footer heading remains `记录仍在 继续。`, and small navigation copy meets normal-text contrast.
 
 ## Comparison history
 
@@ -133,6 +163,16 @@
 - Focused evidence: `.mission-control/solar-term-redesign-20260727/evidence/review-4/screenshots/review-4-paper-focus-comparison.jpg`
 - Responsive evidence: `.mission-control/solar-term-redesign-20260727/evidence/review-4/screenshots/home-xuan-paper-mobile.jpg`
 
+### Iteration 6
+
+- Earlier P2 finding: paper-colored small text on the vermilion navigation panel measured only `3.52:1` contrast.
+- Fix: changed navigation text and rules to ink while preserving the vermilion panel. The final contrast is `5.00:1`.
+- Earlier P2 finding: the decorative footer image produced a development warning when the short empty state made it the Largest Contentful Paint.
+- Fix: marked the optimized local image as eager. A clean reload produced zero new console errors and zero new console warnings.
+- Post-fix desktop evidence: `.mission-control/footer-redesign-20260728/evidence/footer-desktop-final-1098.jpg`
+- Post-fix mobile evidence: `.mission-control/footer-redesign-20260728/evidence/footer-mobile-final-390.jpg`
+- Post-fix comparison: `.mission-control/footer-redesign-20260728/evidence/footer-before-after-final.jpg`
+
 ## Browser verification
 
 - Primary routes checked: homepage, blog archive, and article detail.
@@ -150,6 +190,11 @@
 - Review 4 route check: homepage, blog archive, and article detail inherited the same paper surface, navbar translucency, and texture layer.
 - Review 4 responsive check: the mobile document and client widths both measured `381` pixels, with no horizontal overflow.
 - Review 4 post-build note: a fresh development request reached the designed retry state because the public GitHub API returned `403`. The production build completed all 20 static pages successfully, and the visual change introduced no layout or interaction failure.
+- Review 5 desktop check: the footer measured `1089 x 443` inside a `1098 x 800` browser viewport, with all three panels and metadata visible in the evidence capture.
+- Review 5 mobile check: the footer measured `381 x 959`; document width and client width both measured `381` pixels.
+- Review 5 interaction check: the back-to-top link set the URL hash to `#main-content` and moved the page to `scrollY 80`.
+- Review 5 runtime check: final desktop and mobile reloads produced zero new console errors and zero new console warnings.
+- Review 5 build check: `pnpm lint` passed. The production build passed with `GITHUB_REPO_OWNER=bigbigbo` and `GITHUB_REPO_NAME=issue-blog`, generating 29 pages.
 
 ## Implementation checklist
 
@@ -166,6 +211,11 @@
 - [x] Replace broad seasonal fills with a consistent xuan-paper white family.
 - [x] Carry visible raster paper fibers through the page, navbar, and term rail.
 - [x] Preserve four-season identity through compact accent tokens.
+- [x] Apply the acid, ink, and vermilion footer palette.
+- [x] Add readable offset projection to both display-glyph areas.
+- [x] Place a real irregular collage asset behind the statement.
+- [x] Preserve footer copy, links, focus behavior, and responsive stacking.
+- [x] Verify contrast, browser console, mobile overflow, lint, and production build.
 
 ## Follow-up polish
 
