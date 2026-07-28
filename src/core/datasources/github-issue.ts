@@ -12,6 +12,8 @@ if (!OWNER || !REPO) {
   );
 }
 
+const AUTHOR = process.env.NEXT_PUBLIC_BLOG_AUTHOR ?? OWNER;
+
 export interface Issue {
   id: number;
   number: number;
@@ -40,6 +42,7 @@ export async function getIssueList({ page, perPage }: { page: number; perPage: n
         direction: "desc",
         page: String(page),
         per_page: String(perPage),
+        creator: AUTHOR,
       },
     })
     .json<Issue[]>();

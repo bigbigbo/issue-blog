@@ -1,4 +1,5 @@
 import type { Issue } from "@/core/datasources/github-issue";
+import { extractFirstMarkdownImage, extractPlainTextExcerpt } from "@/core/utils/article-content";
 
 export interface IssueLabel {
   id: number;
@@ -21,6 +22,8 @@ export interface IssueDetail {
   html_url: string;
   user: IssueUser;
   labels: IssueLabel[];
+  excerpt: string;
+  leadImage: string | null;
 }
 
 export interface IssueListItem {
@@ -32,6 +35,8 @@ export interface IssueListItem {
   html_url: string;
   user: IssueUser;
   labels: IssueLabel[];
+  excerpt: string;
+  leadImage: string | null;
 }
 
 export function createIssue(data: Issue): IssueDetail {
@@ -52,6 +57,8 @@ export function createIssue(data: Issue): IssueDetail {
       name: label.name,
       color: label.color,
     })),
+    excerpt: extractPlainTextExcerpt(data.body),
+    leadImage: extractFirstMarkdownImage(data.body),
   };
 }
 
@@ -72,5 +79,7 @@ export function createIssueListItem(data: Issue): IssueListItem {
       name: label.name,
       color: label.color,
     })),
+    excerpt: extractPlainTextExcerpt(data.body),
+    leadImage: extractFirstMarkdownImage(data.body),
   };
 }

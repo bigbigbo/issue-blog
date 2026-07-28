@@ -10,6 +10,36 @@ export interface SolarTerm {
   themeColor: string;
 }
 
+export const SOLAR_TERM_KEYS = [
+  "lichun",
+  "yushui",
+  "jingzhe",
+  "chunfen",
+  "qingming",
+  "guyu",
+  "lixia",
+  "xiaoman",
+  "mangzhong",
+  "xiazhi",
+  "xiaoshu",
+  "dashu",
+  "liqiu",
+  "chushu",
+  "bailu",
+  "qiufen",
+  "hanlu",
+  "shuangjiang",
+  "lidong",
+  "xiaoxue",
+  "daxue",
+  "dongzhi",
+  "xiaohan",
+  "dahan",
+] as const;
+
+export type SolarTermKey = (typeof SOLAR_TERM_KEYS)[number];
+export type SolarTermSeason = "spring" | "summer" | "autumn" | "winter";
+
 export const SOLAR_TERMS: Record<string, SolarTerm> = {
   // 春季节气 - 浅绿色系列，逐渐加深
   lichun: {
@@ -236,6 +266,15 @@ export const SOLAR_TERMS: Record<string, SolarTerm> = {
   },
 };
 
+export function getSolarTermSeason(solarTermKey: string): SolarTermSeason {
+  const index = SOLAR_TERM_KEYS.indexOf(solarTermKey as SolarTermKey);
+
+  if (index >= 0 && index < 6) return "spring";
+  if (index < 12) return "summer";
+  if (index < 18) return "autumn";
+  return "winter";
+}
+
 // 节气定义 - 黄经度数与名称的映射
 const SOLAR_TERM_DEGREES: Record<number, string> = {
   315: "lichun", // 立春，黄经315°
@@ -296,8 +335,8 @@ function getDaysBetweenSolarTerms(date1: Date, date2: Date): number {
 }
 
 // 获取当前节气
-export function getCurrentSolarTerm(): string {
-  const now = new Date();
+export function getCurrentSolarTerm(date: Date = new Date()): string {
+  const now = date;
   const currentYear = now.getFullYear();
 
   // 获取当年和下一年的节气日期

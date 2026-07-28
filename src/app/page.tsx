@@ -1,28 +1,55 @@
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import type { Metadata } from "next";
 
-import Profile from "@/components/profile";
-import { DynamicSolarTermDisplay } from "@/components/solar-term";
+import { EditorialHome } from "@/components/home";
+
+import { getQueryClient } from "@/utils/get-query-client";
+
+import {
+  resolveDevelopmentDate,
+  resolveDevelopmentFixture,
+  resolveDevelopmentReducedMotion,
+} from "@/core/utils/development-fixtures";
+import { infiniteIssueListOptions } from "@/stories/github-issue";
 
 export const metadata: Metadata = {
   title: "二十四节气",
-  description: "展示当前节气、诗词和季节信息",
+  description: "以二十四节气为线索，阅读 Bigbigbo 的技术笔记与生活观察。",
 };
 
-export default function SolarTermPage() {
-  return (
-    <main className="relative w-full">
-      {/* 主要内容区域 */}
-      <section className="flex min-h-[calc(100vh-5rem)] w-full items-center justify-center px-4 py-8">
-        <div className="z-10 flex w-full max-w-7xl flex-col items-center justify-between gap-8 p-4 lg:flex-row lg:gap-12">
-          <div className="w-full lg:w-1/2">
-            <Profile />
-          </div>
+export const revalidate = 300;
 
-          <div className="flex w-full justify-end lg:w-1/2">
-            <DynamicSolarTermDisplay />
-          </div>
-        </div>
-      </section>
-    </main>
+interface HomePageProps {
+  searchParams: Promise<{
+    date?: string | string[];
+    fixture?: string | string[];
+    motion?: string | string[];
+  }>;
+}
+
+export default async function HomePage({ searchParams }: HomePageProps) {
+  const resolvedSearchParams = await searchParams;
+  const fixture = resolveDevelopmentFixture(resolvedSearchParams.fixture);
+  const deterministicDate = resolveDevelopmentDate(resolvedSearchParams.date);
+  const forceReducedMotion = resolveDevelopmentReducedMotion(resolvedSearchParams.motion);
+  const viewDate = deterministicDate ?? new Date();
+  const queryClient = getQueryClient();
+
+  if (fixture === null || fixture === "exhausted") {
+    await queryClient.prefetchInfiniteQuery(
+      infiniteIssueListOptions({
+        initialPage: 1,
+        perPage: 6,
+        isServerInitialLoad: true,
+      }),
+    );
+  }
+
+  return (
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <main id="main-content" className="editorial-main">
+        <EditorialHome dateIso={viewDate.toISOString()} fixture={fixture} forceReducedMotion={forceReducedMotion} />
+      </main>
+    </HydrationBoundary>
   );
 }

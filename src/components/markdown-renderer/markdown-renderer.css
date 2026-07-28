@@ -1,165 +1,234 @@
+.markdown-body {
+  width: 100%;
+  max-width: 74ch;
+  color: var(--ink);
+  font-family: var(--font-geist-sans), "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-size: 18px;
+  line-height: 1.9;
+  overflow-wrap: anywhere;
+}
+
+.markdown-body > :first-child {
+  margin-top: 0;
+}
+
+.markdown-body > :last-child {
+  margin-bottom: 0;
+}
+
 .markdown-body h1,
 .markdown-body h2,
 .markdown-body h3,
 .markdown-body h4,
 .markdown-body h5,
 .markdown-body h6 {
-  font-weight: 700;
-  line-height: 1.3;
-  margin-top: 1.5em;
-  margin-bottom: 0.75em;
-  color: #000000;
+  margin: 2.2em 0 0.75em;
+  color: var(--ink);
+  font-family: "Songti SC", "STSong", serif;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.25;
+  scroll-margin-top: 110px;
 }
 
 .markdown-body h1 {
-  font-size: 2rem;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-  padding-bottom: 0.3em;
+  padding-bottom: 0.34em;
+  border-bottom: 1px solid var(--rule-strong);
+  font-size: 2.55rem;
 }
 
 .markdown-body h2 {
-  font-size: 1.5rem;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   padding-bottom: 0.3em;
+  border-bottom: 1px solid var(--rule);
+  font-size: 2rem;
 }
 
 .markdown-body h3 {
-  font-size: 1.25rem;
+  font-size: 1.55rem;
 }
 
 .markdown-body h4 {
+  font-size: 1.25rem;
+}
+
+.markdown-body h5,
+.markdown-body h6 {
   font-size: 1rem;
 }
 
 .markdown-body p {
-  margin-top: 1em;
-  margin-bottom: 1em;
-  line-height: 1.7;
-  color: #000000;
+  margin: 1.35em 0;
 }
 
 .markdown-body a {
-  color: #2563eb;
+  border-bottom: 1px solid var(--vermilion);
+  color: inherit;
   text-decoration: none;
-  transition: color 0.2s;
+  transition:
+    color 280ms ease,
+    background-color 280ms ease;
 }
 
 .markdown-body a:hover {
-  color: #1d4ed8;
-  text-decoration: underline;
+  color: var(--vermilion);
+  background: rgba(199, 242, 58, 0.22);
 }
 
 .markdown-body strong {
-  font-weight: 700;
-  color: #000000;
+  font-weight: 800;
 }
 
 .markdown-body em {
+  color: #44433e;
   font-style: italic;
-  color: #374151;
 }
 
 .markdown-body blockquote {
-  margin: 1em 0;
-  padding: 0.5em 1em;
-  border-left: 4px solid #6b7280;
-  background-color: rgba(0, 0, 0, 0.05);
-  border-radius: 0 0.25rem 0.25rem 0;
-  font-style: italic;
-  color: #374151;
+  margin: 2em 0;
+  padding: 1.15em 1.4em;
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+  border-left: 5px solid var(--vermilion);
+  color: #363530;
+  background: rgba(231, 224, 211, 0.48);
+  font-family: "Songti SC", "STSong", serif;
+  font-size: 1.08em;
+}
+
+.markdown-body blockquote > :first-child {
+  margin-top: 0;
+}
+
+.markdown-body blockquote > :last-child {
+  margin-bottom: 0;
 }
 
 .markdown-body ul,
 .markdown-body ol {
-  margin: 1em 0;
-  padding-left: 2em;
-  line-height: 1.7;
-  color: #000000;
+  margin: 1.4em 0;
+  padding-left: 1.55em;
 }
 
 .markdown-body ul {
-  list-style-type: disc;
+  list-style-type: square;
 }
 
 .markdown-body ol {
-  list-style-type: decimal;
+  list-style-type: decimal-leading-zero;
 }
 
 .markdown-body li {
-  margin: 0.3em 0;
+  margin: 0.55em 0;
+  padding-left: 0.3em;
 }
 
-.markdown-body li > ul,
-.markdown-body li > ol {
-  margin: 0.2em 0;
+.markdown-body li::marker {
+  color: var(--vermilion);
+  font-family: var(--font-geist-mono), monospace;
+  font-weight: 700;
 }
 
 .markdown-body code {
-  font-family: monospace;
-  background-color: rgba(0, 0, 0, 0.1);
-  padding: 0.2em 0.4em;
-  border-radius: 0.25rem;
-  font-size: 0.9em;
-  color: #dc2626;
+  padding: 0.18em 0.36em;
+  border: 1px solid var(--rule);
+  color: #9c2b15;
+  background: var(--paper-deep);
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 0.86em;
 }
 
 .markdown-body pre {
-  margin: 1em 0;
-  padding: 1em;
-  background-color: #1f2937;
-  border-radius: 0.5rem;
+  max-width: 100%;
+  margin: 2em 0;
+  padding: 1.4em;
   overflow-x: auto;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  border: 1px solid #000;
+  color: #f4f0e7;
+  background: #171714;
+  font-size: 0.86em;
+  line-height: 1.65;
+  tab-size: 2;
 }
 
 .markdown-body pre code {
-  background-color: transparent;
-  padding: 0;
-  font-size: 0.9em;
-  color: #e5e7eb;
   display: block;
-  line-height: 1.5;
+  padding: 0;
+  border: 0;
+  color: inherit;
+  background: transparent;
+  font-size: 1em;
 }
 
 .markdown-body img {
+  display: block;
   max-width: 100%;
   height: auto;
-  border-radius: 0.375rem;
-  margin: 1em 0;
+  margin: 2.3em auto;
+  border: 1px solid var(--rule-strong);
 }
 
 .markdown-body hr {
   height: 1px;
-  border: none;
-  background-color: rgba(0, 0, 0, 0.2);
-  margin: 2em 0;
+  margin: 3em 0;
+  border: 0;
+  background: var(--ink);
 }
 
 .markdown-body table {
+  display: block;
   width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  margin: 1em 0;
-  overflow: hidden;
-  border-radius: 0.375rem;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  margin: 2em 0;
+  overflow-x: auto;
+  border-collapse: collapse;
+  font-size: 0.88em;
 }
 
-.markdown-body table th {
-  padding: 0.75em;
+.markdown-body th,
+.markdown-body td {
+  min-width: 120px;
+  padding: 0.8em 0.9em;
+  border: 1px solid var(--rule-strong);
   text-align: left;
-  font-weight: 600;
-  background-color: rgba(0, 0, 0, 0.05);
-  color: #000000;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  vertical-align: top;
 }
 
-.markdown-body table td {
-  padding: 0.75em;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-  color: #374151;
+.markdown-body th {
+  color: var(--paper);
+  background: var(--ink);
+  font-weight: 750;
 }
 
-.markdown-body table tr:last-child td {
-  border-bottom: none;
+.markdown-body td {
+  background: rgba(243, 239, 230, 0.45);
+}
+
+@media (max-width: 767px) {
+  .markdown-body {
+    max-width: none;
+    font-size: 17px;
+    line-height: 1.85;
+  }
+
+  .markdown-body h1 {
+    font-size: 2.1rem;
+  }
+
+  .markdown-body h2 {
+    font-size: 1.7rem;
+  }
+
+  .markdown-body h3 {
+    font-size: 1.4rem;
+  }
+
+  .markdown-body pre {
+    width: calc(100% + 20px);
+    margin-left: -10px;
+    padding: 1.1em;
+    font-size: 0.8em;
+  }
+
+  .markdown-body blockquote {
+    padding-inline: 1em;
+  }
 }

@@ -2,212 +2,228 @@
 
 import { useEffect } from "react";
 
-import { Calendar, Tag } from "lucide-react";
-import { motion } from "motion/react";
-import Image from "next/image";
+import { ArrowRight } from "lucide-react";
+import { motion, useReducedMotion } from "motion/react";
 import Link from "next/link";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useQueryState } from "nuqs";
 
-import { getCurrentSolarTerm, SOLAR_TERMS } from "@/core/constants/solar-terms";
-import type { IssueListItem } from "@/core/entities/github-issue";
+import { ArticleImage } from "@/components/editorial";
+
+import type { DevelopmentFixture } from "@/core/utils/development-fixtures";
 import { useInfiniteIssueList } from "@/stories/github-issue";
 
-interface BlogListClientProps {
-  initialIssues?: IssueListItem[];
+interface BlogListProps {
   initialPage: number;
+  fixture: DevelopmentFixture | null;
 }
 
-export function BlogList({ initialPage }: BlogListClientProps) {
+const archiveDateFormatter = new Intl.DateTimeFormat("zh-CN", {
+  timeZone: "Asia/Shanghai",
+  year: "numeric",
+  month: "2-digit",
+  day: "2-digit",
+});
+
+function ArchiveMasthead({ articleCount }: { articleCount: number }) {
+  return (
+    <header className="archive-masthead">
+      <p className="archive-masthead__eyebrow">ARCHIVE / 文章索引</p>
+      <h1>博客归档</h1>
+      <p className="archive-masthead__intro">技术实践、产品思考，以及在四季之间留下的日常观察。</p>
+      <p className="archive-masthead__count">
+        <span>{String(articleCount).padStart(2, "0")}</span>
+        <small>篇已载入</small>
+      </p>
+    </header>
+  );
+}
+
+function ArchiveLoading() {
+  return (
+    <section className="archive-state" aria-busy="true" aria-label="博客归档正在加载">
+      <p className="state-copy">正在加载文章归档</p>
+      {[0, 1, 2].map((row) => (
+        <div className="archive-skeleton-row" key={row} aria-hidden="true">
+          <div className="editorial-skeleton archive-skeleton-row__index" />
+          <div className="editorial-skeleton archive-skeleton-row__copy" />
+          <div className="editorial-skeleton archive-skeleton-row__image" />
+        </div>
+      ))}
+    </section>
+  );
+}
+
+export function BlogList({ initialPage, fixture }: BlogListProps) {
   const [page, setPage] = useQueryState("page", { defaultValue: String(initialPage) });
-
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, isError } = useInfiniteIssueList({
-    initialPage: initialPage,
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const prefersReducedMotion = useReducedMotion();
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, isError, refetch } = useInfiniteIssueList({
+    initialPage,
     perPage: 10,
+    enabled: fixture === null || fixture === "exhausted",
   });
-
-  // 获取当前节气主题色
-  const currentSolarTermKey = getCurrentSolarTerm();
-  const currentSolarTerm = SOLAR_TERMS[currentSolarTermKey];
-  const themeColor = currentSolarTerm.themeColor;
 
   useEffect(() => {
     if (data?.pageParams?.length) {
       const lastPageParam = data.pageParams[data.pageParams.length - 1];
 
       if (typeof lastPageParam === "number" && String(lastPageParam) !== page) {
-        setPage(String(lastPageParam));
+        void setPage(String(lastPageParam));
       }
     }
   }, [data?.pageParams, page, setPage]);
 
-  const issues = (data?.pages || [])
+  const blogAuthor = process.env.NEXT_PUBLIC_BLOG_AUTHOR ?? process.env.GITHUB_REPO_OWNER;
+  const issues = (data?.pages ?? [])
     .flatMap((pageData) => pageData)
-    .filter((issue) => {
-      return issue.user.login === process.env.NEXT_PUBLIC_BLOG_AUTHOR;
-    });
+    .filter((issue) => !blogAuthor || issue.user.login === blogAuthor);
+
+  const clearFixture = () => {
+    const nextSearchParams = new URLSearchParams(searchParams.toString());
+    nextSearchParams.delete("fixture");
+    const query = nextSearchParams.toString();
+    router.replace(query ? `${pathname}?${query}` : pathname);
+    router.refresh();
+  };
+
+  const handleRetry = () => {
+    if (fixture === "error") {
+      clearFixture();
+      return;
+    }
+
+    void refetch();
+  };
 
   const handleLoadMore = async () => {
-    if (isFetchingNextPage || !hasNextPage) return;
+    if (isFetchingNextPage || !hasNextPage || fixture === "exhausted") return;
     await fetchNextPage();
   };
 
-  if (isLoading) {
+  if (fixture === "loading" || (isLoading && fixture !== "empty")) {
     return (
-      <div className="py-16 text-center">
-        <motion.div
-          className="mx-auto h-8 w-8 rounded-full border-2 border-gray-300"
-          style={{
-            borderTopColor: themeColor,
-          }}
-          animate={{ rotate: 360 }}
-          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-        />
-        <p className="mt-4 text-gray-600">加载中...</p>
-      </div>
+      <>
+        <ArchiveMasthead articleCount={0} />
+        <ArchiveLoading />
+      </>
     );
   }
 
-  if (isError) {
+  if (fixture === "error" || isError) {
     return (
-      <div className="py-16 text-center">
-        <h3 className="text-xl text-red-600">获取博客列表失败</h3>
-        <p className="mt-2 text-gray-500">请稍后重试</p>
-      </div>
+      <>
+        <ArchiveMasthead articleCount={0} />
+        <section className="archive-message" role="alert">
+          <p className="archive-message__index">ERR / 文章索引</p>
+          <h2>博客归档暂时无法读取</h2>
+          <p>请重新获取文章列表。</p>
+          <button type="button" className="editorial-action" onClick={handleRetry}>
+            重新获取
+            <ArrowRight aria-hidden="true" />
+          </button>
+        </section>
+      </>
     );
   }
 
-  if (issues.length === 0) {
+  if (fixture === "empty" || issues.length === 0) {
     return (
-      <div className="py-16 text-center">
-        <h3 className="text-xl text-gray-700">暂无博客内容</h3>
-        <p className="mt-2 text-gray-500">敬请期待更多精彩内容</p>
-      </div>
+      <>
+        <ArchiveMasthead articleCount={0} />
+        <section className="archive-message archive-message--empty">
+          <p className="archive-message__index">00 / 文章索引</p>
+          <h2>暂无博客内容</h2>
+          <p>下一篇记录正在酝酿。</p>
+        </section>
+      </>
     );
   }
+
+  const isExhausted = fixture === "exhausted" || !hasNextPage;
 
   return (
-    <div className="mx-auto w-full max-w-4xl">
-      {/* 标题 */}
-      <motion.div
-        className="mb-12 text-center"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-      >
-        <h1 className="mb-4 text-5xl font-bold text-gray-800">我的博客</h1>
-        <div className="mx-auto h-1 w-20 rounded-full" style={{ backgroundColor: themeColor }} />
-        <p className="mt-4 text-lg text-gray-600">记录技术学习与生活感悟</p>
-      </motion.div>
+    <>
+      <ArchiveMasthead articleCount={issues.length} />
 
-      {/* 博客列表 */}
-      <div className="space-y-6">
+      <section className="archive-list" aria-label="博客文章列表">
         {issues.map((issue, index) => (
-          <motion.div
+          <motion.article
             key={issue.id}
-            initial={{ opacity: 0, y: 20 }}
+            className="archive-entry"
+            data-reverse={index % 2 === 1}
+            initial={prefersReducedMotion ? false : { opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: index * 0.1 }}
+            transition={
+              prefersReducedMotion
+                ? { duration: 0 }
+                : { duration: 0.32, delay: Math.min(index, 4) * 0.04, ease: "easeOut" }
+            }
           >
-            <Link href={`/blog/${issue.number}`} className="group block transition-all duration-300">
-              <motion.article
-                className="rounded-xl border border-gray-200 bg-white/90 p-6 backdrop-blur-sm transition-all duration-300 hover:border-gray-300 hover:bg-white hover:shadow-lg"
-                whileHover={{
-                  scale: 1.02,
-                  boxShadow: `0 20px 40px rgba(0,0,0,0.1), 0 0 20px ${themeColor}20`,
-                }}
-                style={{
-                  background: `linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.85) 100%)`,
-                }}
-              >
-                <h3 className="mb-4 text-2xl font-semibold text-gray-800 transition-colors duration-300 group-hover:text-gray-900">
-                  {issue.title}
-                </h3>
+            <Link href={`/blog/${issue.number}`} className="archive-entry__link">
+              <div className="archive-entry__index" aria-hidden="true">
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                <small>{index === 0 ? "/ 最新" : "/ 文章"}</small>
+              </div>
 
-                <div className="mb-4 flex flex-wrap items-center gap-4 text-sm text-gray-600">
-                  <div className="flex items-center gap-2">
-                    <Calendar className="h-4 w-4" style={{ color: themeColor }} />
-                    <span>{new Date(issue.created_at).toLocaleDateString("zh-CN")}</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Image
-                      src={issue.user.avatar_url}
-                      alt={issue.user.login}
-                      className="h-5 w-5 rounded-full"
-                      width={20}
-                      height={20}
-                    />
-                    <span>{issue.user.login}</span>
-                  </div>
-                </div>
-
+              <div className="archive-entry__copy">
+                <p className="archive-entry__meta">
+                  <time dateTime={issue.created_at}>{archiveDateFormatter.format(new Date(issue.created_at))}</time>
+                  <span>{issue.user.login}</span>
+                </p>
+                <h2>{issue.title}</h2>
+                <p className="archive-entry__excerpt">{issue.excerpt || "一篇关于技术、观察与日常节律的记录。"}</p>
                 {issue.labels.length > 0 && (
-                  <div className="flex flex-wrap gap-2">
+                  <ul className="archive-entry__labels" aria-label="文章标签">
                     {issue.labels.map((label) => (
-                      <motion.span
-                        key={label.id}
-                        className="inline-flex items-center rounded-full px-3 py-1 text-xs font-medium"
-                        style={{
-                          backgroundColor: `#${label.color}15`,
-                          color: `#${label.color}`,
-                          border: `1px solid #${label.color}30`,
-                        }}
-                        whileHover={{ scale: 1.05 }}
-                        transition={{ duration: 0.2 }}
-                      >
-                        <Tag className="mr-1 h-3 w-3" />
-                        {label.name}
-                      </motion.span>
+                      <li key={label.id}>{label.name}</li>
                     ))}
-                  </div>
+                  </ul>
                 )}
-              </motion.article>
-            </Link>
-          </motion.div>
-        ))}
-      </div>
+                <span className="archive-entry__read">
+                  阅读文章
+                  <ArrowRight aria-hidden="true" />
+                </span>
+              </div>
 
-      {/* 加载更多按钮 */}
-      <motion.div
-        className="mt-16 flex justify-center"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.5 }}
-      >
-        {hasNextPage ? (
-          <motion.button
-            onClick={handleLoadMore}
-            disabled={isFetchingNextPage}
-            className="rounded-full px-8 py-3 font-medium text-white transition-all duration-300 disabled:cursor-not-allowed disabled:opacity-50"
-            style={{
-              background: `linear-gradient(135deg, ${themeColor}90, ${themeColor})`,
-              boxShadow: `0 8px 20px ${themeColor}30`,
-            }}
-            whileHover={{
-              scale: 1.05,
-              boxShadow: `0 12px 25px ${themeColor}40`,
-            }}
-            whileTap={{ scale: 0.95 }}
-          >
-            {isFetchingNextPage ? (
-              <span className="flex items-center gap-2">
-                <motion.span
-                  className="h-4 w-4 rounded-full border-2 border-white/30 border-t-white"
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                />
-                加载中...
-              </span>
-            ) : (
-              "加载更多"
-            )}
-          </motion.button>
+              <ArticleImage
+                source={issue.leadImage}
+                alt={`${issue.title}的文章题图`}
+                sizes="(max-width: 767px) 100vw, 42vw"
+                className="archive-entry__image"
+                imageClassName="archive-entry__image-asset"
+                priority={index === 0}
+              />
+            </Link>
+          </motion.article>
+        ))}
+      </section>
+
+      <footer className="archive-pagination" aria-live="polite" aria-atomic="true">
+        {isExhausted ? (
+          <p>
+            <span>END</span>
+            已载入全部文章，没有更多内容了
+          </p>
         ) : (
-          <div className="text-center text-gray-500">
-            <div className="mx-auto mb-2 h-px w-16" style={{ backgroundColor: themeColor }} />
-            没有更多内容了
-          </div>
+          <>
+            <button
+              type="button"
+              className="editorial-action editorial-action--solid"
+              onClick={handleLoadMore}
+              disabled={isFetchingNextPage}
+            >
+              {isFetchingNextPage ? "正在加载更多文章" : "加载更多"}
+              {!isFetchingNextPage && <ArrowRight aria-hidden="true" />}
+            </button>
+            <p className="archive-pagination__status">
+              {isFetchingNextPage ? "新文章正在加入当前列表" : `当前第 ${page} 页`}
+            </p>
+          </>
         )}
-      </motion.div>
-    </div>
+      </footer>
+    </>
   );
 }
