@@ -9,6 +9,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 import { ArticleImage } from "@/components/editorial";
 
+import { isBlogAuthor } from "@/core/utils/blog-authors";
 import type { DevelopmentFixture } from "@/core/utils/development-fixtures";
 import { useInfiniteIssueList } from "@/stories/github-issue";
 
@@ -38,11 +39,9 @@ export function LatestArticle({ fixture, forceReducedMotion = false }: LatestArt
   });
 
   const articles = useMemo(() => {
-    const blogAuthor = process.env.NEXT_PUBLIC_BLOG_AUTHOR ?? process.env.GITHUB_REPO_OWNER;
-
     return (data?.pages ?? [])
       .flatMap((page) => page)
-      .filter((issue) => !blogAuthor || issue.user.login === blogAuthor)
+      .filter((issue) => isBlogAuthor(issue.user.login))
       .slice(0, 6);
   }, [data?.pages]);
 

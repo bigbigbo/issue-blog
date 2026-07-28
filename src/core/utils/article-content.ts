@@ -1,5 +1,6 @@
 const markdownImagePattern = /!\[([^\]]*)\]\(\s*<?((?:https?:\/\/|\/)[^)\s>]+)>?(?:\s+(?:"[^"]*"|'[^']*'))?\s*\)/i;
 const htmlImagePattern = /<img[^>]+src=["']((?:https?:\/\/|\/)[^"']+)["'][^>]*>/i;
+const publishedAtPattern = /<!--\s*published_at:\s*(\d{4}-\d{2}-\d{2})\s*-->/i;
 
 export function extractFirstMarkdownImage(markdown: string): string | null {
   const markdownMatch = markdown.match(markdownImagePattern);
@@ -41,4 +42,16 @@ export function extractPlainTextExcerpt(markdown: string, maximumLength = 152): 
   }
 
   return `${Array.from(plainText).slice(0, maximumLength).join("").trimEnd()}…`;
+}
+
+export function extractPublishedAt(markdown: string, fallback: string): string {
+  const publishedAt = markdown.match(publishedAtPattern)?.[1];
+
+  if (!publishedAt) {
+    return fallback;
+  }
+
+  const parsedDate = new Date(`${publishedAt}T00:00:00+08:00`);
+
+  return Number.isNaN(parsedDate.valueOf()) ? fallback : parsedDate.toISOString();
 }

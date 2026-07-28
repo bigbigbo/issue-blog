@@ -1,5 +1,5 @@
 import type { Issue } from "@/core/datasources/github-issue";
-import { extractFirstMarkdownImage, extractPlainTextExcerpt } from "@/core/utils/article-content";
+import { extractFirstMarkdownImage, extractPlainTextExcerpt, extractPublishedAt } from "@/core/utils/article-content";
 
 export interface IssueLabel {
   id: number;
@@ -45,7 +45,7 @@ export function createIssue(data: Issue): IssueDetail {
     number: data.number,
     title: data.title,
     body: data.body,
-    created_at: data.created_at,
+    created_at: extractPublishedAt(data.body, data.created_at),
     updated_at: data.updated_at,
     html_url: data.html_url,
     user: {
@@ -67,7 +67,7 @@ export function createIssueListItem(data: Issue): IssueListItem {
     id: data.id,
     number: data.number,
     title: data.title,
-    created_at: data.created_at,
+    created_at: extractPublishedAt(data.body, data.created_at),
     updated_at: data.updated_at,
     html_url: data.html_url,
     user: {

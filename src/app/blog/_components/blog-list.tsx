@@ -10,6 +10,7 @@ import { useQueryState } from "nuqs";
 
 import { ArticleImage } from "@/components/editorial";
 
+import { isBlogAuthor } from "@/core/utils/blog-authors";
 import type { DevelopmentFixture } from "@/core/utils/development-fixtures";
 import { useInfiniteIssueList } from "@/stories/github-issue";
 
@@ -76,10 +77,7 @@ export function BlogList({ initialPage, fixture }: BlogListProps) {
     }
   }, [data?.pageParams, page, setPage]);
 
-  const blogAuthor = process.env.NEXT_PUBLIC_BLOG_AUTHOR ?? process.env.GITHUB_REPO_OWNER;
-  const issues = (data?.pages ?? [])
-    .flatMap((pageData) => pageData)
-    .filter((issue) => !blogAuthor || issue.user.login === blogAuthor);
+  const issues = (data?.pages ?? []).flatMap((pageData) => pageData).filter((issue) => isBlogAuthor(issue.user.login));
 
   const clearFixture = () => {
     const nextSearchParams = new URLSearchParams(searchParams.toString());
