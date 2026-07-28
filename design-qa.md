@@ -15,6 +15,41 @@
 - Focused latest-article comparison: `.mission-control/solar-term-redesign-20260727/evidence/round-1/screenshots/home-final-lower-focused-comparison.png`
 - The colorful pet at the far right edge of some Chrome captures is a browser overlay outside the application DOM and is excluded from visual judgment.
 
+## Review 2 comparison target
+
+- User review source: `/Users/brooks/Library/Application Support/PixPin/Temp/PixPin_2026-07-28_12-56-12.png`
+- User review source pixels: `875 x 735`
+- Review request: reduce the oversized desktop term glyph, offset the two characters horizontally and vertically, and restore a four-season gradient background across the site.
+- Revised homepage capture: `.mission-control/solar-term-redesign-20260727/evidence/review-2/screenshots/home-seasonal-gradient-desktop.png`
+- Revised homepage capture pixels: `1479 x 1109`
+- Revised CSS viewport: `1488 x 1058`
+- Mobile capture: `.mission-control/solar-term-redesign-20260727/evidence/review-2/screenshots/home-seasonal-gradient-mobile.png`
+- Review comparison: `.mission-control/solar-term-redesign-20260727/evidence/review-2/screenshots/review-2-before-after-comparison.png`
+- Comparison normalization: the revised desktop capture was cropped to `875 x 735` from `x 144, y 24` so the glyph, facts column, image edge, and lower boundary align with the user's focused source crop.
+- Additional route evidence: `.mission-control/solar-term-redesign-20260727/evidence/review-2/screenshots/blog-seasonal-gradient-desktop.png` and `.mission-control/solar-term-redesign-20260727/evidence/review-2/screenshots/article-seasonal-gradient-desktop.png`
+
+## Review 3 comparison target
+
+- Final user direction: remove every gradient and retain seasonal color changes through four coordinated solid palettes.
+- Earlier implementation: `.mission-control/solar-term-redesign-20260727/evidence/review-2/screenshots/home-seasonal-gradient-desktop.png`
+- Final implementation: `.mission-control/solar-term-redesign-20260727/evidence/review-3/screenshots/home-seasonal-solid-desktop.png`
+- Desktop comparison: `.mission-control/solar-term-redesign-20260727/evidence/review-3/screenshots/review-3-gradient-vs-solid-comparison.png`
+- Mobile evidence: `.mission-control/solar-term-redesign-20260727/evidence/review-3/screenshots/home-seasonal-solid-mobile.png`
+- Source and implementation pixels: both desktop captures are `1479 x 1109`, captured from a `1488 x 1058` CSS viewport at device pixel ratio `1`.
+- State: `2026-07-28`, current term `大暑`, summer palette.
+
+## Review 4 comparison target
+
+- Final user direction: replace the seasonal page surfaces with the soft white of xuan paper and make the paper fibers visibly present.
+- Source implementation: `.mission-control/solar-term-redesign-20260727/evidence/review-4/screenshots/home-seasonal-solid-before.jpg`
+- Revised implementation: `.mission-control/solar-term-redesign-20260727/evidence/review-4/screenshots/home-xuan-paper-desktop-1.jpg`
+- Full-view comparison: `.mission-control/solar-term-redesign-20260727/evidence/review-4/screenshots/review-4-seasonal-vs-xuan-comparison.jpg`
+- Focused paper comparison: `.mission-control/solar-term-redesign-20260727/evidence/review-4/screenshots/review-4-paper-focus-comparison.jpg`
+- Mobile evidence: `.mission-control/solar-term-redesign-20260727/evidence/review-4/screenshots/home-xuan-paper-mobile.jpg`
+- Source and implementation pixels: both desktop captures are `1479 x 1109`, captured from a `1488 x 1058` CSS viewport at device pixel ratio `1`.
+- Mobile capture pixels: `381 x 2423`, captured from a `390 x 844` CSS viewport at device pixel ratio `1`.
+- State: `2026-07-28`, current term `大暑`, with the xuan-paper surface and summer accent.
+
 ## Findings
 
 - No actionable P0, P1, or P2 findings remain.
@@ -33,10 +68,10 @@
 
 ## Required fidelity surfaces
 
-- Fonts and typography: the Song-style display face, heavy two-character term title, compact serif metadata, monospaced counters, weights, line heights, tracking, wrapping, and hierarchy were checked in the full and focused comparisons. The desktop term glyph was optically widened and its line rhythm adjusted to match the source silhouette. Mobile body copy remains at 16 pixels or larger.
+- Fonts and typography: the Song-style display face, heavy two-character term title, compact serif metadata, monospaced counters, weights, line heights, tracking, wrapping, and hierarchy were checked in the full and focused comparisons. The final desktop glyph occupies about 55 percent of its field width, leaves clear vertical breathing room, and offsets its two characters diagonally. Mobile body copy remains at 16 pixels or larger.
 - Spacing and layout rhythm: header height, rail width, hero tracks, facts column, image column, lower article module, rules, padding, and vertical section boundaries align closely with the source. The 12-column desktop grid and responsive mobile stack have no clipping or collision.
-- Colors and visual tokens: ivory paper, near-black ink, vermilion accent, muted rules, and acid-green current-state marker consistently map to the source. Active and focus states retain sufficient contrast.
-- Image quality and asset fidelity: the seasonal hero, article shadow photograph, and paper grain are real raster assets with intentional crops and no visible stretching, halos, or placeholder treatment. Visible arrows and circular marks use the project icon family or image assets.
+- Colors and visual tokens: near-black ink, muted rules, the acid-green current-state marker, and xuan-paper neutrals remain consistent across content, navigation, and the term rail. The page surface is `#f8f7f1`, the navbar is `#f2efe7`, and the rail is `#f5f3eb`. Four-season identity remains in compact accent surfaces, including the brand mark, active navigation, and selected-term inset rule. No CSS gradient remains.
+- Image quality and asset fidelity: the seasonal hero, article shadow photograph, and paper grain are real raster assets with intentional crops and no visible stretching, halos, or placeholder treatment. The existing high-resolution paper grain is filtered toward a neutral white and blended at `0.38` opacity so fibers remain legible without obscuring typography. Visible arrows and circular marks use the project icon family or image assets.
 - Copy and content: navigation, term details, article controls, loading, error, empty, and exhausted-state copy are coherent. Real article content intentionally replaces mock copy.
 - Icons: navigation arrows, article controls, status marks, and focus indicators share a consistent stroke and scale. No emoji or text-glyph icon substitutions are present in the application.
 - States and interactions: term selection, keyboard roving focus, latest-article controls, blog pagination, retry, loading, empty, exhausted, skip-link, and reduced-motion states were exercised.
@@ -62,12 +97,59 @@
 - Earlier evidence: `.mission-control/solar-term-redesign-20260727/evidence/round-1/screenshots/home-hero-focused-comparison.png`
 - Post-fix evidence: `.mission-control/solar-term-redesign-20260727/evidence/round-1/screenshots/home-final-hero-focused-comparison.png`
 
+### Iteration 3
+
+- User P2 finding: the desktop term glyph had become too large on wide screens and filled the field too aggressively.
+- Fix: reduced the wide-screen font range from `320 to 360` pixels to `270 to 330` pixels, removed the large group stretch, and used a restrained `1.18` optical width adjustment on each glyph.
+- User P2 finding: the two term characters lacked the desired staggered rhythm.
+- Fix: shifted the first glyph left and up, then shifted the second glyph right and down. At `1488 x 1058`, each visible glyph measures about `309 x 232` pixels within a `560 x 664` field.
+- User P2 finding: the flat ivory site background lost the previous version's seasonal atmosphere.
+- Fix: restored a site-wide multi-stop gradient driven by the exact term color and a four-season companion palette. Homepage term selection updates the gradient immediately. Archive and article routes return to the current date-derived season.
+- Post-fix evidence: `.mission-control/solar-term-redesign-20260727/evidence/review-2/screenshots/review-2-before-after-comparison.png`
+- Responsive evidence: `.mission-control/solar-term-redesign-20260727/evidence/review-2/screenshots/home-seasonal-gradient-mobile.png`
+- Cross-route evidence: `.mission-control/solar-term-redesign-20260727/evidence/review-2/screenshots/blog-seasonal-gradient-desktop.png` and `.mission-control/solar-term-redesign-20260727/evidence/review-2/screenshots/article-seasonal-gradient-desktop.png`
+
+### Iteration 4
+
+- User P2 finding: the gradient treatment made the navbar and term rail feel detached from the rest of the editorial system.
+- Interim fix: extended the seasonal gradient into both navigation regions.
+- User correction: remove gradients entirely and retain only four-season color variation.
+- Final fix: replaced every gradient with solid seasonal tokens for the page surface, navbar, and term rail. The selected term returned to solid near-black with a season-colored inset rule.
+- Final palettes:
+  - Spring: surface `#e9f0e4`, navbar `#dde8d7`, rail `#e2ebde`
+  - Summer: surface `#f3e3dc`, navbar `#ecd8cf`, rail `#efddd5`
+  - Autumn: surface `#f1e7cf`, navbar `#e9dcba`, rail `#eee1c6`
+  - Winter: surface `#e5edf2`, navbar `#d9e5ec`, rail `#dfe9ef`
+- Post-fix evidence: `.mission-control/solar-term-redesign-20260727/evidence/review-3/screenshots/review-3-gradient-vs-solid-comparison.png`
+- Responsive evidence: `.mission-control/solar-term-redesign-20260727/evidence/review-3/screenshots/home-seasonal-solid-mobile.png`
+
+### Iteration 5
+
+- User P2 finding: the four seasonal surface colors still felt heavier than the desired traditional paper mood.
+- Fix: replaced the seasonal surface, navbar, and rail colors with a coordinated xuan-paper white family while retaining season changes only in compact accent tokens.
+- User P2 finding: the existing paper grain was too faint inside opaque navigation surfaces.
+- Fix: increased the real raster grain to `0.38` opacity, neutralized its warmth with a grayscale and contrast filter, and made the navbar and rail slightly translucent so the fiber field continues through those regions.
+- Post-fix evidence: `.mission-control/solar-term-redesign-20260727/evidence/review-4/screenshots/review-4-seasonal-vs-xuan-comparison.jpg`
+- Focused evidence: `.mission-control/solar-term-redesign-20260727/evidence/review-4/screenshots/review-4-paper-focus-comparison.jpg`
+- Responsive evidence: `.mission-control/solar-term-redesign-20260727/evidence/review-4/screenshots/home-xuan-paper-mobile.jpg`
+
 ## Browser verification
 
 - Primary routes checked: homepage, blog archive, and article detail.
 - Primary interactions checked: term pointer selection, ArrowRight, Home, End, Enter, Space, latest-article next control, blog load more, retry, and skip link.
 - State captures checked: loading skeleton, error and retry, empty homepage, empty blog, exhausted pagination, keyboard focus, and reduced motion.
 - Runtime check: after the clean development-server restart and route traversal, Chrome reported zero new console errors and zero new console warnings.
+- Review 2 seasonal states checked: `春分` mapped to spring `#aae99e`, `大暑` mapped to summer `#ffa4a4`, `秋分` mapped to autumn `#ffe97d`, and `冬至` mapped to winter `#b5d9ff`.
+- Review 2 responsive check: the mobile homepage measured `381` pixels for both document and client width, with no horizontal overflow.
+- Review 2 runtime check: the final interaction and route traversal produced zero new console errors and zero new console warnings.
+- Review 3 palette check: spring, summer, autumn, and winter each updated the page surface, navbar, term rail, and dark active accent.
+- Review 3 gradient check: computed `background-image` was `none` for the seasonal backdrop, navbar, and term rail in all four seasons.
+- Review 3 mobile check: document width and client width both measured `381` pixels with the solid summer navbar and horizontal term rail visible.
+- Review 4 seasonal check: spring, summer, autumn, and winter all retained the same xuan-paper surface `#f8f7f1`, navbar `#f2efe7`, and rail `#f5f3eb`, while their dark accent tokens changed independently.
+- Review 4 paper check: the fixed paper layer computed to `0.38` opacity with `multiply` blending and the expected neutralizing filter.
+- Review 4 route check: homepage, blog archive, and article detail inherited the same paper surface, navbar translucency, and texture layer.
+- Review 4 responsive check: the mobile document and client widths both measured `381` pixels, with no horizontal overflow.
+- Review 4 post-build note: a fresh development request reached the designed retry state because the public GitHub API returned `403`. The production build completed all 20 static pages successfully, and the visual change introduced no layout or interaction failure.
 
 ## Implementation checklist
 
@@ -77,6 +159,13 @@
 - [x] Implement core controls and all required states.
 - [x] Verify keyboard access, focus, target sizes, and reduced motion.
 - [x] Compare normalized source and implementation captures after the final visual fix.
+- [x] Reduce and stagger the wide-screen term glyph.
+- [x] Apply four coordinated solid seasonal palettes across homepage, archive, and article routes.
+- [x] Keep the navbar and term rail within the active seasonal palette.
+- [x] Remove every CSS gradient from the final implementation.
+- [x] Replace broad seasonal fills with a consistent xuan-paper white family.
+- [x] Carry visible raster paper fibers through the page, navbar, and term rail.
+- [x] Preserve four-season identity through compact accent tokens.
 
 ## Follow-up polish
 

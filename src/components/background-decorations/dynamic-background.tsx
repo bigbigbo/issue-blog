@@ -1,34 +1,45 @@
 "use client";
 
-import { BackgroundDecorations } from "@/components/background-decorations";
+import { useEffect, useState } from "react";
 
 import { useSolarTerm } from "@/hooks/use-solar-term";
 
+import { SEASONAL_THEME_EVENT, type SeasonalThemeDetail } from "@/core/constants/seasonal-theme";
+import type { SolarTermSeason } from "@/core/constants/solar-terms";
+
 export function DynamicBackground() {
   const { season, themeColor } = useSolarTerm();
+  const [activeTheme, setActiveTheme] = useState<SeasonalThemeDetail>({
+    season: season as SolarTermSeason,
+    themeColor,
+  });
 
-  return (
-    <div
-      className="fixed inset-0 z-0"
-      style={{
-        backgroundImage: `
-          radial-gradient(circle at 20% 30%, ${themeColor}30 0%, transparent 50%),
-          radial-gradient(circle at 80% 70%, ${themeColor}20 0%, transparent 60%)
-        `,
-      }}
-    >
-      <BackgroundDecorations themeColor={"#000000"} season={season} />
+  useEffect(() => {
+    setActiveTheme({
+      season: season as SolarTermSeason,
+      themeColor,
+    });
+  }, [season, themeColor]);
 
-      <div
-        className="absolute inset-0 z-0 opacity-40"
-        style={{
-          backgroundImage: `
-            linear-gradient(to right bottom, transparent, ${themeColor}20),
-            radial-gradient(circle at 60% 40%, ${themeColor}25, transparent 70%)
-          `,
-          filter: "blur(120px)",
-        }}
-      />
-    </div>
-  );
+  useEffect(() => {
+    const handleThemeChange = (event: Event) => {
+      const { detail } = event as CustomEvent<SeasonalThemeDetail>;
+
+      if (detail?.season && detail?.themeColor) {
+        setActiveTheme(detail);
+      }
+    };
+
+    window.addEventListener(SEASONAL_THEME_EVENT, handleThemeChange);
+    return () => window.removeEventListener(SEASONAL_THEME_EVENT, handleThemeChange);
+  }, []);
+
+  useEffect(() => {
+    const root = document.documentElement;
+
+    root.dataset.season = activeTheme.season;
+    root.style.setProperty("--season-accent", activeTheme.themeColor);
+  }, [activeTheme]);
+
+  return <div className="seasonal-backdrop" data-season={activeTheme.season} aria-hidden="true" />;
 }

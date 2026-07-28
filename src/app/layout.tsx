@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 
+import { DynamicBackground } from "@/components/background-decorations";
 import { PaperTexture } from "@/components/editorial";
 import { Navbar } from "@/components/navbar";
 import Providers from "@/components/providers";
@@ -31,6 +32,7 @@ export default function RootLayout({
   return (
     <html lang="zh-CN">
       <body className={`${lxgwWenKai.variable} antialiased`}>
+        <DynamicBackground />
         <PaperTexture />
         <Providers>
           <a className="skip-link" href="#main-content">

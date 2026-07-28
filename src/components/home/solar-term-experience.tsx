@@ -6,6 +6,7 @@ import { ArrowRight, CircleDot } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import Image from "next/image";
 
+import { SEASONAL_THEME_EVENT } from "@/core/constants/seasonal-theme";
 import {
   getCurrentSolarTerm,
   getSolarTermSeason,
@@ -84,6 +85,8 @@ export function SolarTermExperience({ dateIso, forceReducedMotion = false }: Sol
   const viewDate = new Date(dateIso);
   const currentTermKey = getCurrentSolarTerm(viewDate) as SolarTermKey;
   const currentIndex = SOLAR_TERM_KEYS.indexOf(currentTermKey);
+  const currentTerm = SOLAR_TERMS[currentTermKey];
+  const currentSeason = getSolarTermSeason(currentTermKey);
   const [selectedTermKey, setSelectedTermKey] = useState<SolarTermKey>(currentTermKey);
   const [focusedIndex, setFocusedIndex] = useState(currentIndex);
   const termButtons = useRef<Array<HTMLButtonElement | null>>([]);
@@ -106,6 +109,31 @@ export function SolarTermExperience({ dateIso, forceReducedMotion = false }: Sol
       behavior: "auto",
     });
   }, [currentIndex]);
+
+  useEffect(() => {
+    window.dispatchEvent(
+      new CustomEvent(SEASONAL_THEME_EVENT, {
+        detail: {
+          season: selectedSeason,
+          themeColor: selectedTerm.themeColor,
+        },
+      }),
+    );
+  }, [selectedSeason, selectedTerm.themeColor]);
+
+  useEffect(
+    () => () => {
+      window.dispatchEvent(
+        new CustomEvent(SEASONAL_THEME_EVENT, {
+          detail: {
+            season: currentSeason,
+            themeColor: currentTerm.themeColor,
+          },
+        }),
+      );
+    },
+    [currentSeason, currentTerm.themeColor],
+  );
 
   const focusTerm = (index: number) => {
     const boundedIndex = Math.max(0, Math.min(SOLAR_TERM_KEYS.length - 1, index));
