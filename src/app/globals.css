@@ -457,9 +457,9 @@ button:disabled {
   margin: 0;
   flex-direction: column;
   align-items: center;
-  font-family: "Songti SC", "STSong", "Noto Serif CJK SC", serif;
+  font-family: var(--font-lxgw-wenkai), serif;
   font-size: clamp(175px, 19vw, 285px);
-  font-weight: 800;
+  font-weight: 500;
   letter-spacing: -0.12em;
   line-height: 0.76;
 }
