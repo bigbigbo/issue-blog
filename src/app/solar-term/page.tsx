@@ -19,7 +19,7 @@ export const metadata: Metadata = createPageMetadata({
   description: "查看今年二十四节气的准确日期、当前节气、下一个节气和相关诗句。",
   path: "/solar-term",
   keywords: ["二十四节气日期", "当前节气", "节气表", "传统文化"],
-  image: "/images/editorial/solar-summer.png",
+  image: "/images/editorial/solar-summer-v2.png",
 });
 
 const fullDateFormatter = new Intl.DateTimeFormat("zh-CN", {

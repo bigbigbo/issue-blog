@@ -19,20 +19,20 @@ import {
 
 const seasonImages: Record<SolarTermSeason, { source: string; alt: string }> = {
   spring: {
-    source: "/images/editorial/solar-spring.png",
-    alt: "春日新芽与湿润枝叶的粗网点摄影",
+    source: "/images/editorial/solar-spring-v2.png",
+    alt: "春雨后阳光下盛开的粉色玉兰与嫩绿枝叶",
   },
   summer: {
-    source: "/images/editorial/solar-summer.png",
-    alt: "盛夏荷叶间成熟莲蓬的粗网点摄影",
+    source: "/images/editorial/solar-summer-v2.png",
+    alt: "盛夏阳光下荷塘中盛开的粉色荷花",
   },
   autumn: {
-    source: "/images/editorial/solar-autumn.png",
-    alt: "深秋植物与成熟果实的粗网点摄影",
+    source: "/images/editorial/solar-autumn-v2.png",
+    alt: "秋日阳光中挂满橙红柿子的枝头",
   },
   winter: {
-    source: "/images/editorial/solar-winter.png",
-    alt: "冬日霜雪覆盖枝叶的粗网点摄影",
+    source: "/images/editorial/solar-winter-v2.png",
+    alt: "冬日晴空下覆雪绽放的红梅",
   },
 };
 
