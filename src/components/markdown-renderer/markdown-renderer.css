@@ -1,10 +1,11 @@
 .markdown-body {
   width: 100%;
-  max-width: 74ch;
+  max-width: 70ch;
   color: var(--ink);
   font-family: var(--font-geist-sans), "PingFang SC", "Microsoft YaHei", sans-serif;
   font-size: 18px;
-  line-height: 1.9;
+  letter-spacing: 0.008em;
+  line-height: 1.78;
   overflow-wrap: anywhere;
 }
 
@@ -22,7 +23,7 @@
 .markdown-body h4,
 .markdown-body h5,
 .markdown-body h6 {
-  margin: 2.2em 0 0.75em;
+  margin: 2em 0 0.72em;
   color: var(--ink);
   font-family: "Songti SC", "STSong", serif;
   font-weight: 800;
@@ -57,7 +58,7 @@
 }
 
 .markdown-body p {
-  margin: 1.35em 0;
+  margin: 1.15em 0;
 }
 
 .markdown-body a {
@@ -84,7 +85,7 @@
 }
 
 .markdown-body blockquote {
-  margin: 2em 0;
+  margin: 1.8em 0;
   padding: 1.15em 1.4em;
   border-top: 1px solid var(--ink);
   border-bottom: 1px solid var(--ink);
@@ -93,6 +94,7 @@
   background: rgba(231, 224, 211, 0.48);
   font-family: "Songti SC", "STSong", serif;
   font-size: 1.08em;
+  line-height: 1.72;
 }
 
 .markdown-body blockquote > :first-child {
@@ -105,7 +107,7 @@
 
 .markdown-body ul,
 .markdown-body ol {
-  margin: 1.4em 0;
+  margin: 1.2em 0;
   padding-left: 1.55em;
 }
 
@@ -128,35 +130,128 @@
   font-weight: 700;
 }
 
-.markdown-body code {
-  padding: 0.18em 0.36em;
+.markdown-body code:not(.code-block__code) {
+  padding: 0.16em 0.38em;
   border: 1px solid var(--rule);
+  border-radius: 3px;
   color: #9c2b15;
-  background: var(--paper-deep);
+  background: rgba(231, 224, 211, 0.72);
+  box-decoration-break: clone;
   font-family: var(--font-geist-mono), ui-monospace, monospace;
   font-size: 0.86em;
+  letter-spacing: -0.015em;
+  -webkit-box-decoration-break: clone;
 }
 
-.markdown-body pre {
+.code-block {
   max-width: 100%;
   margin: 2em 0;
-  padding: 1.4em;
+  overflow: hidden;
+  border: 1px solid #363832;
+  border-radius: 8px;
+  background: #20221f;
+  box-shadow: 0 18px 42px rgba(30, 29, 25, 0.14);
+}
+
+.code-block__toolbar {
+  display: flex;
+  min-height: 44px;
+  padding: 0 12px 0 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  align-items: center;
+  justify-content: space-between;
+  color: #b7bbad;
+  background: #292b27;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+}
+
+.code-block__language {
+  font-weight: 650;
+}
+
+.code-block__copy {
+  display: inline-flex;
+  min-width: 72px;
+  min-height: 34px;
+  padding: 0 9px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  color: #d9dccf;
+  background: transparent;
+  font: inherit;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  transition:
+    color 180ms ease,
+    border-color 180ms ease,
+    background-color 180ms ease;
+}
+
+.code-block__copy:hover {
+  border-color: rgba(255, 255, 255, 0.16);
+  color: #fff;
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.code-block__copy:focus-visible {
+  outline: 2px solid var(--season-strong);
+  outline-offset: 1px;
+}
+
+.code-block__copy svg {
+  width: 14px;
+  height: 14px;
+}
+
+.code-block__pre {
+  max-width: 100%;
+  margin: 0;
+  padding: 20px 0 22px;
   overflow-x: auto;
-  border: 1px solid #000;
-  color: #f4f0e7;
-  background: #171714;
-  font-size: 0.86em;
-  line-height: 1.65;
+  color: #e3e5dc;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 0.82em;
+  font-variant-ligatures: none;
+  line-height: 1.72;
   tab-size: 2;
 }
 
-.markdown-body pre code {
+.code-block__code {
   display: block;
+  width: max-content;
+  min-width: 100%;
   padding: 0;
   border: 0;
   color: inherit;
   background: transparent;
   font-size: 1em;
+}
+
+.code-block__line {
+  display: grid;
+  min-height: 1.72em;
+  padding: 0 22px 0 0;
+  grid-template-columns: 48px minmax(0, 1fr);
+}
+
+.code-block__line:hover {
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.code-block__line-number {
+  padding-right: 16px;
+  color: #70746a;
+  text-align: right;
+  user-select: none;
+}
+
+.code-block__line-content {
+  white-space: pre;
 }
 
 .markdown-body img {
@@ -206,7 +301,7 @@
   .markdown-body {
     max-width: none;
     font-size: 17px;
-    line-height: 1.85;
+    line-height: 1.76;
   }
 
   .markdown-body h1 {
@@ -221,11 +316,24 @@
     font-size: 1.4rem;
   }
 
-  .markdown-body pre {
+  .code-block {
     width: calc(100% + 20px);
     margin-left: -10px;
-    padding: 1.1em;
-    font-size: 0.8em;
+    border-radius: 6px;
+  }
+
+  .code-block__pre {
+    padding-block: 17px 19px;
+    font-size: 0.78em;
+  }
+
+  .code-block__line {
+    padding-right: 17px;
+    grid-template-columns: 40px minmax(0, 1fr);
+  }
+
+  .code-block__line-number {
+    padding-right: 12px;
   }
 
   .markdown-body blockquote {
